@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mon Parcours sur Hack The Box – Penetration Tester</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Momo+Signature&family=Oswald:wght@200..700&family=Special+Gothic+Condensed+One&display=swap" rel="stylesheet">
+    <style>
+
+        /* ===== ROOT VARIABLES ===== */
+        :root {
+            --color-light: #f7ebdb;
+            --color-red: #d00404;
+            --color-dark: #001524;
+            --color-blue: #679cbc;
+            
+            --transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .project-detail {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .project-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .project-header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            color: var(--color-light);        }
+
+        .project-meta {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+            font-size: 0.95em;
+            color: #666;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: var(--color-light);
+        }
+
+        .objective-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 40px;
+        }
+
+        .objective-box h2 {
+            margin-top: 0;
+            font-size: 1.8em;
+        }
+
+        .objective-box ul {
+            margin: 15px 0;
+            padding-left: 25px;
+        }
+
+        .objective-box li {
+            margin: 8px 0;
+        }
+
+        .step-section {
+            margin-bottom: 50px;
+            padding-bottom: 40px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .step-section:last-child {
+            border-bottom: none;
+        }
+
+        .step-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .step-number {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.5em;
+            flex-shrink: 0;
+        }
+
+        .step-header h3 {
+            margin: 0;
+            font-size: 1.5em;
+            color: var(--color-light);
+        }
+
+        .step-content {
+            margin-left: 65px;
+            margin-bottom: 20px;
+        }
+
+        .step-content p {
+            margin: 10px 0;
+            color: var(--color-light);
+            line-height: 1.6;
+        }
+
+        .step-list {
+            margin: 15px 0;
+            padding-left: 25px;
+            color: var(--color-light);
+        }
+
+        .step-list li {
+            margin: 8px 0;
+            color: var(--color-light);
+        }
+
+        .screenshot-container {
+            margin: 30px 0;
+            text-align: center;
+        }
+
+        .screenshot-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 10px;
+        }
+
+        .screenshot-caption {
+            font-size: 0.95em;
+            color: var(--color-light);
+            font-style: italic;
+            margin-top: 10px;
+        }
+
+        .screenshot-row {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+}
+
+    .screenshot-row img {
+        width: 100%;
+        max-width: 900px;
+        height: auto;
+        border-radius: 10px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    @media (max-width: 768px) {
+        .screenshot-row img {
+            min-width: 100%;
+            max-width: 100%;
+        }
+    }
+
+        .conclusion-box {
+            background: var(--color-light);
+            padding: 30px;
+            border-left: 5px solid #667eea;
+            border-radius: 5px;
+            margin-top: 40px;
+        }
+
+        .conclusion-box h3 {
+            color: var(--color-blue);
+            margin-top: 0;
+        }
+
+        .conclusion-box p, .conclusion-box h4{
+            color: var(--color-dark);
+        }
+
+        .conclusion-box ul, .conclusion-box li{
+            color: var(--color-dark);
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .skill-item {
+            background: var(--color-blue);
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #e0e0e0;
+            font-size: 0.95em;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 30px;
+            transition: all 0.3s;
+            color: var(--color-light);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .back-link:hover {
+            transition: all 0.3s;
+            color: #667eea;
+        }
+
+        @media (max-width: 768px) {
+            .project-header h1 {
+                font-size: 1.8em;
+            }
+
+            .step-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .step-content {
+                margin-left: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+
+    <div class="project-detail">
+        <a href="../index.html#projects" class="back-link">← Retour aux projets</a>
+
+        <div class="project-header">
+            <h1>Mon Parcours sur Hack The Box – Penetration Tester</h1>
+            <div class="project-meta">
+                <div class="meta-item">2025</div>
+                <div class="meta-item">Projet Personnel</div>
+                <div class="meta-item">Cybersécurité Offensive / Pentesting</div>
+            </div>
+        </div>
+
+        <div class="objective-box">
+            <h2>Objectif du Parcours</h2>
+            <p>L'objectif de mon parcours sur Hack The Box est de <strong>développer des compétences en pentesting et en cybersécurité offensive</strong>, tout en adoptant une méthodologie structurée et réaliste.</p>
+            <p>Ce parcours complète mes projets <strong>Blue Team / SOC</strong>, en me permettant de mieux comprendre les techniques d'attaque afin d'améliorer leur détection et leur prévention.</p>
+            <p><strong>Ce parcours démontre des compétences en :</strong></p>
+            <ul>
+                <li>Méthodologie de penetration testing</li>
+                <li>Reconnaissance réseau et web</li>
+                <li>Attaques sur l'authentification</li>
+                <li>Cracking de mots de passe</li>
+                <li>Exploitation de vulnérabilités</li>
+                <li>Analyse offensive et défensive</li>
+            </ul>
+        </div>
+
+        <!-- ÉTAPE 1 -->
+        <div class="step-section">
+            <div class="step-header">
+                <div class="step-number">1</div>
+                <h3>Progression sur le Penetration Tester Path (Basic Toolset)</h3>
+            </div>
+            <div class="step-content">
+                <p>J'ai complété l'intégralité du <strong>Basic Toolset</strong>, faisant partie du Penetration Tester Path.</p>
+                <p><strong>Modules réalisés :</strong></p>
+                <ul class="step-list">
+                    <li>Network Enumeration with Nmap</li>
+                    <li>Login Brute Forcing</li>
+                    <li>Attacking Web Applications with FFUF</li>
+                    <li>Cracking Passwords with Hashcat</li>
+                    <li>SQLMAP Essentials</li>
+                    <li>Intro to Network Traffic Analysis</li>
+                    <li>Using Web Proxies</li>
+                </ul>
+                <p>Ces modules couvrent les <strong>outils essentiels</strong> utilisés lors des premières phases d'un test d'intrusion.</p>
+            </div>
+            <div class="screenshot-container">
+                <img src="../img/HTB/BASICtoolset.png" alt="Vue du HTB Penetration Tester Path">
+                <p class="screenshot-caption">Vue du path + modules complétés</p>
+            </div>
+        </div>
+
+        <!-- ÉTAPE 2 -->
+        <div class="step-section">
+            <div class="step-header">
+                <div class="step-number">2</div>
+                <h3>Reconnaissance et énumération (Nmap & FFUF)</h3>
+            </div>
+            <div class="step-content">
+                <p><strong>Compétences mises en œuvre :</strong></p>
+                <ul class="step-list">
+                    <li>Découverte des hôtes et services exposés</li>
+                    <li>Analyse des ports et versions</li>
+                    <li>Fuzzing de répertoires et endpoints web</li>
+                    <li>Interprétation des codes HTTP</li>
+                </ul>
+                <p>Cette étape m'a permis de comprendre l'importance de la <strong>surface d'attaque</strong> et de la <strong>phase de reconnaissance</strong> dans tout scénario de compromission.</p>
+            </div>
+            <div class="screenshot-container">
+                <img src="../img/Wazuh5.png" alt="Scan Nmap">
+                <p class="screenshot-caption">Scan Nmap avec découverte de services</p>
+            </div>
+            <div class="screenshot-container">
+                <img src="../img/HTB/Ffuf.png" alt="Résultats FFUF">
+                <p class="screenshot-caption">Fuzzing avec FFUF - découverte de répertoires</p>
+            </div>
+              <div class="screenshot-container">
+                <img src="../img/HTB/Page ffuf.png" alt="page FFUF">
+                <p class="screenshot-caption">Page découverte avec FFUF</p>
+            </div>
+        </div>
+
+        <!-- ÉTAPE 3 -->
+        <div class="step-section">
+            <div class="step-header">
+                <div class="step-number">3</div>
+                <h3>Attaques sur l'authentification et mots de passe</h3>
+            </div>
+            <div class="step-content">
+                <p><strong>Techniques et outils utilisés :</strong></p>
+                <ul class="step-list">
+                    <li>Brute force avec Hydra</li>
+                    <li>Création de wordlists ciblées</li>
+                    <li>Cracking de hash avec Hashcat</li>
+                    <li>Identification des faiblesses de politiques de mots de passe</li>
+                </ul>
+                <p>Cette étape met en évidence l'<strong>impact critique des mécanismes d'authentification mal sécurisés</strong>.</p>
+            </div>
+            <div class="screenshot-container">
+                <img src="../img/Wazuh6.png" alt="Brute force avec Hydra">
+                <p class="screenshot-caption">Brute force avec Hydra</p>
+            </div>
+            <div class="screenshot-container">
+                <img src="../img/HTB/hashcat1.png" alt="Hash cracking avec Hashcat">
+                <p class="screenshot-caption">Mise en place d'une procédure de cracking de hash</p>
+            </div>
+             <div class="screenshot-container">
+                <img src="../img/HTB/hashcat2.png" alt="Hash cracking avec Hashcat">
+                <p class="screenshot-caption">Hash cracké avec hashcat</p>
+            </div>
+        </div>
+
+        <!-- ÉTAPE 4 -->
+        <div class="step-section">
+            <div class="step-header">
+                <div class="step-number">4</div>
+                <h3>Mise en pratique sur machine réelle : Cap</h3>
+            </div>
+            <div class="step-content">
+                <p>J'ai appliqué l'ensemble des compétences acquises sur la <strong>machine Cap</strong> :</p>
+                <ul class="step-list">
+                    <li>Énumération réseau et web</li>
+                    <li>Exploitation de failles logiques</li>
+                    <li>Accès utilisateur</li>
+                </ul>
+                <p>Cette machine m'a permis de suivre une <strong>chaîne d'attaque complète</strong>, du scan initial à l'élévation de privilèges.</p>
+            </div>
+            <div class="screenshot-container">
+                <img src="../img/HTB/CAP.png" alt="Flag utilisateur Cap">
+                <p class="screenshot-caption">Machine pawned</p>
+          
+        </div>
+
+        <!-- ÉTAPE 5 -->
+        <div class="step-section">
+            <div class="step-header">
+                <div class="step-number">5</div>
+                <h3>Analyse et investigation : Sherlock Brutus</h3>
+            </div>
+            <div class="step-content">
+                <p>J'ai également résolu le <strong>Sherlock "Brutus"</strong>, axé sur l'analyse d'événements de sécurité.</p>
+                <p><strong>Compétences développées :</strong></p>
+                <ul class="step-list">
+                    <li>Analyse de logs</li>
+                    <li>Corrélation d'événements</li>
+                    <li>Détection d'attaques par brute force</li>
+                </ul>
+                <p>Ce travail fait directement le lien avec mes projets SOC / SIEM (Wazuh) et renforce ma compréhension du lien <strong>attaque ↔ détection</strong>.</p>
+            </div>
+            <div class="screenshot-container">
+                <img src="../img/HTB/BRUTUS.png" alt="Sherlock Brutus complété">
+                <p class="screenshot-caption">Sherlock Brutus - Investigation complétée</p>
+            </div>
+        </div>
+
+        <!-- CONCLUSION -->
+        <div class="conclusion-box">
+            <h3>Conclusion et Compétences Clés Démontrées</h3>
+            <p>Ce parcours illustre une <strong>approche complète et équilibrée</strong> de la cybersécurité, combinant perspective offensive et défensive.</p>
+            
+            <h4>Compétences Clés Démontrées :</h4>
+            <div class="skills-grid">
+                <div class="skill-item">Méthodologie de pentest</div>
+                <div class="skill-item">Reconnaissance réseau et web</div>
+                <div class="skill-item">Attaques sur l'authentification</div>
+                <div class="skill-item">Cracking de mots de passe</div>
+                <div class="skill-item">Exploitation de vulnérabilités</div>
+                <div class="skill-item">Analyse offensive et défensive</div>
+            </div>
+
+            <h4>Liens avec mes Projets SOC :</h4>
+            <ul style="margin: 15px 0; padding-left: 25px;">
+                <li>Meilleure compréhension des techniques d'attaque pour améliorer la détection</li>
+                <li>Capacité à corréler les événements de sécurité avec les techniques réelles de pentesting</li>
+                <li>Vision holistique : attaquant ↔ défenseur</li>
+                <li>Fondations solides pour évoluer vers un rôle de SOC analyst ou pentester</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <p>&copy; 2025 Louis Le Bihan. Tous droits réservés.</p>
+    </footer>
+
+    <script src="../js/script.js"></script>
+</body>
+</html>

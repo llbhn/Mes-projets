@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulation Wazuh - Détection d'Attaque par Force Brute</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Momo+Signature&family=Oswald:wght@200..700&family=Special+Gothic+Condensed+One&display=swap" rel="stylesheet">
+    <style>
+
+        /* ===== ROOT VARIABLES ===== */
+        :root {
+            --color-light: #f7ebdb;
+            --color-red: #d00404;
+            --color-dark: #001524;
+            --color-blue: #679cbc;
+            
+            --transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .project-detail {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .project-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .project-header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            color: var(--color-light);        }
+
+        .project-meta {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+            font-size: 0.95em;
+            color: #666;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: var(--color-light);
+        }
+
+        .objective-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 40px;
+        }
+
+        .objective-box h2 {
+            margin-top: 0;
+            font-size: 1.8em;
+        }
+
+        .objective-box ul {
+            margin: 15px 0;
+            padding-left: 25px;
+        }
+
+        .objective-box li {
+            margin: 8px 0;
+        }
+
+        .step-section {
+            margin-bottom: 50px;
+            padding-bottom: 40px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .step-section:last-child {
+            border-bottom: none;
+        }
+
+        .step-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .step-number {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.5em;
+            flex-shrink: 0;
+        }
+
+        .step-header h3 {
+            margin: 0;
+            font-size: 1.5em;
+            color: var(--color-light);
+        }
+
+        .step-content {
+            margin-left: 65px;
+            margin-bottom: 20px;
+        }
+
+        .step-content p {
+            margin: 10px 0;
+            color: var(--color-light);
+            line-height: 1.6;
+        }
+
+        .step-list {
+            margin: 15px 0;
+            padding-left: 25px;
+            color: var(--color-light);
+        }
+
+        .step-list li {
+            margin: 8px 0;
+            color: var(--color-light);
+        }
+
+        .screenshot-container {
+            margin: 30px 0;
+            text-align: center;
+        }
+
+        .screenshot-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 10px;
+        }
+
+        .screenshot-caption {
+            font-size: 0.95em;
+            color: var(--color-light);
+            font-style: italic;
+            margin-top: 10px;
+        }
+
+        .screenshot-row {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+    align-items: flex-start;
+}
+
+    .screenshot-row img {
+        flex: 1;
+        min-width: 300px;
+        max-width: 500px;
+        height: auto;
+        border-radius: 10px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    @media (max-width: 768px) {
+        .screenshot-row img {
+            min-width: 100%;
+            max-width: 100%;
+        }
+    }
+
+        .conclusion-box {
+            background: var(--color-light);
+            padding: 30px;
+            border-left: 5px solid #667eea;
+            border-radius: 5px;
+            margin-top: 40px;
+        }
+
+        .conclusion-box h3 {
+            color: var(--color-blue);
+            margin-top: 0;
+        }
+
+        .conclusion-box p, .conclusion-box h4{
+            color: var(--color-dark);
+        }
+
+        .conclusion-box ul, .conclusion-box li{
+            color: var(--color-dark);
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .skill-item {
+            background: var(--color-blue);
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #e0e0e0;
+            font-size: 0.95em;
+        }
+
+     
+
+          .back-button {
+            display: inline-block;
+            margin-bottom: 30px;
+            color: var(--color-light);
+            text-decoration: none;
+            font-weight: bold;
+            transition: var(--transition);
+        }
+
+        .back-button:hover {
+            color: #667eea;
+        }
+
+        @media (max-width: 768px) {
+            .project-header h1 {
+                font-size: 1.8em;
+            }
+
+            .step-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .step-content {
+                margin-left: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+
+    <div class="project-detail">
+        <a href="../index.html#projects" class="back-button">← Retour aux projets</a>
+
+            <!-- HEADER -->
+
+        <div class="project-header">
+            <h1>Simulation d'une attaque par force brute et détection avec Wazuh</h1>
+            <div class="project-meta">
+                <div class="meta-item">2025</div>
+                <div class="meta-item">Cybersécurité / SOC</div>
+            </div>
+        </div>
+
+        <div class="objective-box">
+            <h2>Objectif du Projet</h2>
+            <p>L'objectif de ce projet est de <strong>simuler une attaque réaliste par force brute</strong> sur un ordinateur distant (RDP), puis de <strong>détecter et analyser cette attaque via un SIEM (Wazuh)</strong>, comme cela se ferait dans un SOC (Security Operations Center).</p>
+            <p><strong>Ce projet démontre des compétences en :</strong></p>
+            <ul>
+                <li>Cybersécurité (Blue Team / SOC)</li>
+                <li>Analyse de logs</li>
+                <li>Détection d'attaques</li>
+                <li>Administration système et réseau</li>
+                <li>Virtualisation</li>
+            </ul>
+        </div>
+
+        <!-- ÉTAPE 1 -->
+        <div class="step-section">
+            <div class="step-header">
+                <div class="step-number">1</div>
+                <h3>Création et Configuration des Machines Virtuelles</h3>
+            </div>
+            <div class="step-content">
+                <p>J'ai commencé par créer un <strong>environnement de test isolé</strong> à l'aide de machines virtuelles :</p>
+                <ul class="step-list">
+                    <li><strong>WindowsVictime</strong> : machine cible de l'attaque</li>
+                    <li><strong>Linux_Attacker</strong> : machine dédiée aux attaques</li>
+                    <li><strong>ParrotOS</strong> (VM principale) : héberge le Wazuh Manager et sert de poste d'administration</li>
+                </ul>
+                <p><strong>Configuration réseau :</strong></p>
+                <ul class="step-list">
+                    <li>Les trois machines sont configurées sur le même réseau virtuel, afin de pouvoir communiquer entre elles</li>
+                    <li>Chaque VM dispose d'une adresse IP vérifiée et accessible depuis les autres machines</li>
+                </ul>
+            </div>
+            <div class="screenshot-container">
+                <img src="../img/Wazuh0.png" alt="Configuration réseau des VMs">
+                <p class="screenshot-caption">Machine victime et machine attaquante</p>
+            </div>
+        </div>
+
+        <!-- ÉTAPE 2 -->
+        <div class="step-section">
+            <div class="step-header">
+                <div class="step-number">2</div>
+                <h3>Installation de Wazuh Manager et Ajout des Agents</h3>
+            </div>
+            <div class="step-content">
+                <p>Sur ma VM principale <strong>ParrotOS</strong>, j'ai installé :</p>
+                <ul class="step-list">
+                    <li>Wazuh Manager</li>
+                    <li>Wazuh Dashboard</li>
+                </ul>
+                <p>Ensuite, j'ai ajouté :</p>
+                <ul class="step-list">
+                    <li>Un agent Wazuh sur la machine <strong>WindowsVictime</strong></li>
+                    <li>Un agent Wazuh sur la machine <strong>Linux_Attacker</strong></li>
+                </ul>
+                <p>Ces agents permettent de <strong>remonter les journaux système</strong> vers le manager afin de <strong>centraliser les événements de sécurité</strong>.</p>
+            </div>
+            <div class="screenshot-container">
+                <img src="../img/Wazuh2.png" alt="Dashboard Wazuh avec agents">
+                <p class="screenshot-caption">Dashboard Wazuh montrant les agents connectés</p>
+            </div>
+        </div>
+
+       
+
+        <!-- ÉTAPE 3 -->
+        <div class="step-section">
+            <div class="step-header">
+                <div class="step-number">3</div>
+                <h3>Analyse des Logs sur WindowsVictime</h3>
+            </div>
+            <div class="step-content">
+                <p>Sur la machine <strong>WindowsVictime</strong>, j'ai utilisé l'<strong>Observateur d'événements</strong> afin d'analyser les journaux de sécurité.</p>
+                <p>J'ai créé un filtre sur les <strong>Event ID</strong> suivants :</p>
+                <ul class="step-list">
+                    <li><strong>4624</strong> → Connexion réussie</li>
+                    <li><strong>4625</strong> → Échec de connexion (Logon Failure)</li>
+                </ul>
+                <p>Ces événements sont essentiels pour détecter :</p>
+                <ul class="step-list">
+                    <li>Les tentatives de brute force</li>
+                    <li>Les connexions distantes suspectes (RDP)</li>
+                </ul>
+            </div>
+            <div class="screenshot-container">
+                <img src="../img/Wazuh1.png" alt="Event Viewer Windows">
+                <p class="screenshot-caption">Filtre Event Viewer avec 4624 / 4625</p>
+            </div>
+        </div>
+
+        <!-- ÉTAPE 4 -->
+        <div class="step-section">
+            <div class="step-header">
+                <div class="step-number">4</div>
+                <h3>Préparation de l'Attaque par Force Brute</h3>
+            </div>
+            <div class="step-content">
+                <p>Depuis la machine <strong>Linux_Attacker</strong>, j'ai préparé l'attaque :</p>
+                <ul class="step-list">
+                    <li>Découverte réseau avec <strong>Nmap</strong> pour identifier les machines accessibles -> je découvre l'ip de la machine victime (192.168.1.154)</li>
+                    <li>Création d'une <strong>wordlist personnalisée</strong> avec nano, contenant plusieurs mots de passe courants ainsi que le mot de passe réel du compte cible</li>
+                </ul>
+                <p>Cette étape permet de simuler un <strong>comportement réaliste d'attaquant</strong>.</p>
+            </div>
+            <div class="screenshot-container">
+                <div class="screenshot-row">
+                    <img src="../img/Wazuh5.png" alt="Scan Nmap et wordlist">
+                    <img src="../img/Wazuh4.png" alt="wordlist">
+                </div>
+                <p class="screenshot-caption">Scan Nmap + contenu de la wordlist</p>
+            </div>
+        </div>
+
+        <!-- ÉTAPE 5 -->
+        <div class="step-section">
+            <div class="step-header">
+                <div class="step-number">5</div>
+                <h3>Lancement de l'Attaque et Compromission</h3>
+            </div>
+            <div class="step-content">
+                <p>L'attaque par force brute a été lancée avec l'outil <strong>Hydra</strong>, ciblant le service RDP de la machine WindowsVictime.</p>
+                <p>La commande Hydra a généré :</p>
+                <ul class="step-list">
+                    <li>Plusieurs <strong>échecs de connexion</strong> (Event ID 4625)</li>
+                    <li>Une <strong>connexion réussie</strong> (Event ID 4624)</li>
+                </ul>
+                <p>Une fois les identifiants valides obtenus, j'ai utilisé <strong>xfreerdp</strong> pour établir une connexion RDP distante depuis la machine attaquante, <strong>démontrant la compromission du compte utilisateur</strong>.</p>
+            </div>
+            <div class="screenshot-container">
+                <img src="../img/Wazuh6.png" alt="Attaque Hydra en cours">
+                <p class="screenshot-caption">Commande Hydra exécutée</p>
+            </div>
+            <div class="screenshot-container">
+                <img src="../img/Wazuh7.png" alt="Connexion RDP réussie">
+                <p class="screenshot-caption">Connexion RDP réussie vers WindowsVictime</p>
+            </div>
+        </div>
+
+        <!-- ÉTAPE 6 -->
+        <div class="step-section">
+            <div class="step-header">
+                <div class="step-number">6</div>
+                <h3>Actions Post-Compromission et Détection via Wazuh</h3>
+            </div>
+            <div class="step-content">
+                <p>Après la connexion RDP, j'ai réalisé une action simple mais <strong>volontaire</strong> sur la machine compromise :</p>
+                <ul class="step-list">
+                    <li>Création d'un fichier texte <strong>YouAreBeingHacked sur le bureau Windows</strong></li>
+                </ul>
+                <p>Cette action permet de prouver :</p>
+                <ul class="step-list">
+                    <li>L'accès distant non autorisé</li>
+                    <li>L'impact potentiel de la compromission</li>
+                </ul>
+                <p>Dans le <strong>Wazuh Dashboard</strong>, j'ai pu observer :</p>
+                <ul class="step-list">
+                    <li>Les alertes liées au brute force</li>
+                    <li>La connexion réussie depuis la même IP</li>
+                    <li>La corrélation entre les événements d'échec et de succès</li>
+                </ul>
+            </div>
+            <div class="screenshot-container">
+                <img src="../img/Wazuh9.png" alt="Alertes Wazuh">
+                <p class="screenshot-caption">Alertes Wazuh + logs détaillés</p>
+            </div>
+        </div>
+
+        <!-- CONCLUSION -->
+        <div class="conclusion-box">
+            <h3>Conclusion et Compétences Démontrées</h3>
+            <p>Ce projet illustre un <strong>scénario réaliste de détection d'attaque</strong> dans un environnement SOC.</p>
+            
+            <h4>Compétences Mises en Œuvre :</h4>
+            <div class="skills-grid">
+                <div class="skill-item">✓ Déploiement et configuration d'un SIEM (Wazuh)</div>
+                <div class="skill-item">✓ Analyse de logs Windows</div>
+                <div class="skill-item">✓ Détection de brute force RDP</div>
+                <div class="skill-item">✓ Compréhension des Event ID de sécurité</div>
+                <div class="skill-item">✓ Simulation d'une compromission</div>
+                <div class="skill-item">✓ Méthodologie SOC / Blue Team</div>
+            </div>
+
+            <h4>🎓 Ce que j'ai Appris :</h4>
+            <ul style="margin: 15px 0; padding-left: 25px;">
+                <li>Importance de la <strong>centralisation des logs</strong></li>
+                <li><strong>Corrélation d'événements</strong> de sécurité</li>
+                <li>Différence entre <strong>attaque réussie</strong> et <strong>détection efficace</strong></li>
+                <li>Limites et contraintes des services distants (RDP)</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <p>&copy; 2025 Louis Le Bihan. Tous droits réservés.</p>
+    </footer>
+
+    <script src="../js/script.js"></script>
+</body>
+</html>

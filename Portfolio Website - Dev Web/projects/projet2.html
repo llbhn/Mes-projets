@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Segmentation LAN et contrôle d’accès par ACL (Cisco Packet Tracer)</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Momo+Signature&family=Oswald:wght@200..700&family=Special+Gothic+Condensed+One&display=swap" rel="stylesheet">
+    <style>
+
+        /* ===== ROOT VARIABLES ===== */
+        :root {
+            --color-light: #f7ebdb;
+            --color-red: #d00404;
+            --color-dark: #001524;
+            --color-blue: #679cbc;
+            
+            --transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .project-detail {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .project-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .project-header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            color: var(--color-light);        }
+
+        .project-meta {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+            font-size: 0.95em;
+            color: #666;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: var(--color-light);
+        }
+
+        .objective-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 40px;
+        }
+
+        .objective-box h2 {
+            margin-top: 0;
+            font-size: 1.8em;
+        }
+
+        .objective-box ul {
+            margin: 15px 0;
+            padding-left: 25px;
+        }
+
+        .objective-box li {
+            margin: 8px 0;
+        }
+
+        .step-section {
+            margin-bottom: 50px;
+            padding-bottom: 40px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .step-section:last-child {
+            border-bottom: none;
+        }
+
+        .step-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .step-number {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.5em;
+            flex-shrink: 0;
+        }
+
+        .step-header h3 {
+            margin: 0;
+            font-size: 1.5em;
+            color: var(--color-light);
+        }
+
+        .step-content {
+            margin-left: 65px;
+            margin-bottom: 20px;
+        }
+
+        .step-content p {
+            margin: 10px 0;
+            color: var(--color-light);
+            line-height: 1.6;
+        }
+
+        .step-list {
+            margin: 15px 0;
+            padding-left: 25px;
+            color: var(--color-light);
+        }
+
+        .step-list li {
+            margin: 8px 0;
+            color: var(--color-light);
+        }
+
+        .screenshot-container {
+            margin: 30px 0;
+            text-align: center;
+        }
+
+        .screenshot-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 10px;
+        }
+
+        .screenshot-caption {
+            font-size: 0.95em;
+            color: var(--color-light);
+            font-style: italic;
+            margin-top: 10px;
+        }
+
+        .screenshot-row {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+}
+
+    .screenshot-row img {
+        width: 100%;
+        max-width: 900px;
+        height: auto;
+        border-radius: 10px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    @media (max-width: 768px) {
+        .screenshot-row img {
+            min-width: 100%;
+            max-width: 100%;
+        }
+    }
+
+        .conclusion-box {
+            background: var(--color-light);
+            padding: 30px;
+            border-left: 5px solid #667eea;
+            border-radius: 5px;
+            margin-top: 40px;
+        }
+
+        .conclusion-box h3 {
+            color: var(--color-blue);
+            margin-top: 0;
+        }
+
+        .conclusion-box p, .conclusion-box h4{
+            color: var(--color-dark);
+        }
+
+        .conclusion-box ul, .conclusion-box li{
+            color: var(--color-dark);
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .skill-item {
+            background: var(--color-blue);
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #e0e0e0;
+            font-size: 0.95em;
+        }
+
+        .back-button {
+            display: inline-block;
+            margin-bottom: 30px;
+            color: var(--color-light);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .back-button:hover {
+            text-decoration: none;
+            color: #667eea;
+            transition: all 0.3s;
+        }
+
+        @media (max-width: 768px) {
+            .project-header h1 {
+                font-size: 1.8em;
+            }
+
+            .step-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .step-content {
+                margin-left: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+
+    <div class="project-detail">
+
+            <div class="project-detail">
+        <a href="../index.html#projects" class="back-button">← Retour aux projets</a>
+
+            <!-- HEADER -->
+
+
+        <div class="project-header">
+            <h1>Segmentation LAN et contrôle d'accès par ACL (Cisco Packet Tracer)</h1>
+            <div class="project-meta">
+                <div class="meta-item">2025</div>
+                <div class="meta-item">Réseaux</div>
+            </div>
+        </div>
+
+        <div class="objective-box">
+            <h2>Objectif du Projet</h2>
+            <p>L'objectif de ce projet est de <strong>concevoir et sécuriser un réseau local (LAN)</strong> en utilisant des équipements Cisco, puis de mettre en place une<strong> politique de contrôle d’accès à l’aide d’ACL étendues </strong>afin de restreindre la communication entre certains hôtes.</p>
+            <p><strong>Ce projet démontre des compétences en :</strong></p>
+            <ul>
+                <li>Réseaux (LAN, routage, adressage IP)</li>
+                <li>Cybersécurité (contrôle d’accès, filtrage réseau)</li>
+                <li>Configuration Cisco en CLI</li>
+                <li>Compréhension du trafic réseau (ICMP, TCP/IP)</li>
+                <li>Méthodologie réseau et sécurité</li>
+            </ul>
+        </div>
+
+        <!-- ÉTAPE 1 -->
+        <div class="step-section">
+            <div class="step-header">
+                <div class="step-number">1</div>
+                <h3>Conception de la topologie réseau</h3>
+            </div>
+            <div class="step-content">
+                <p>J'ai commencé par concevoir une <strong>topologie réseau</strong> dans Cisco Packet Tracer comprenant :</p>
+                <ul class="step-list">
+                    <li><strong>1 routeur ISR4331</strong> (CLI uniquement)</li>
+                    <li><strong>2 switch 2960-24TT</strong></li>
+                    <li><strong>2 ordinateurs</strong> (PC1, PC2)</li>
+                    <li><strong>1 serveur</strong></li>
+                    <li><strong>1 point d’accès Wi-Fi</strong> (AP) </li>
+                    <li><strong>2 ordinateurs portables</strong></li>
+                </ul>
+                <p><strong>Configuration réseau :</strong></p>
+                <ul class="step-list">
+                    <li>Le réseau est volontairement segmenté en deux sous-réseaux distincts afin de forcer le passage du trafic<br>par le routeur et permettre l’application de règles de sécurité.</li>
+                    
+                </ul>
+            </div>
+            <div class="screenshot-container">
+                <img src="../img/CISCOproject/RESEAU.png" alt="Configuration réseau des VMs">
+                <p class="screenshot-caption">Topologie complète dans Packet Tracer</p>
+            </div>
+        </div>
+
+        <!-- ÉTAPE 2 -->
+        <div class="step-section">
+            <div class="step-header">
+                <div class="step-number">2</div>
+                <h3>Mise en place de l’adressage IP et des sous-réseaux</h3>
+            </div>
+            <div class="step-content">
+                <p><strong>Deux sous-réseaux ont été définis :</strong></p>
+                <ul class="step-list">
+                    <li><strong>192.168.1.0 /24</strong>  -  Réseau utilisateurs (PC1, PC2...)</li>
+                    <li><strong>192.168.2.0 /24</strong>  -  Réseau serveur</li>
+                </ul>
+                <p>Exemple d’adressage :</p>
+                <ul class="step-list">
+                    <li><strong>PC2 :</strong> 192.168.1.20 /24 – <strong>Passerelle :</strong> 192.168.1.1</li>
+                    <li><strong>Serveur :</strong> 192.168.2.10 /24 – <strong>Passerelle :</strong> 192.168.2.1</li>
+                </ul>
+                <p>Cette segmentation permet de contrôler précisément les flux entre utilisateurs et serveur.</p>
+            </div>
+             <div class="screenshot-container">
+                <div class="screenshot-row">
+                    <img src="../img/CISCOproject/IP PC1.png" alt="Configuration IP PC1">
+                    <p class="screenshot-caption">Configuration IP PC1</p>
+                    <img src="../img/CISCOproject/IP PC2.png" alt="wordlist">
+                    <p class="screenshot-caption">Configuration IP PC2</p>
+                    <img src="../img/CISCOproject/IP SERVEUR.png" alt="Configuration IP SERVEUR">
+                    <p class="screenshot-caption">Configuration IP SERVEUR</p>
+                </div>
+            </div>
+        </div>
+
+       
+
+        <!-- ÉTAPE 3 -->
+        <div class="step-section">
+            <div class="step-header">
+                <div class="step-number">3</div>
+                <h3>Tests de connectivité avant sécurisation</h3>
+            </div>
+            <div class="step-content">
+                <p>Avant de mettre en place l'ACL (Access-List), j'ai vérifié la connectivité :</p>
+                <ul class="step-list">
+                    <li><strong>PC2 → Serveur :</strong> ping réussi</li>
+                    <li><strong>PC1 → Serveur :</strong> ping réussi</li>
+                    <li><strong>Tous les équipements communiquent normalement</strong></li>
+                </ul>
+                <p>Cela confirme que le routage est fonctionnel et que le réseau est correctement configuré.</p>
+            </div>
+            <div class="screenshot-container">
+                <img src="../img/CISCOproject/PING PC1 APRES.png" alt="Ping PC1 vers SERVEUR réussi avant ACL">
+                <p class="screenshot-caption">Ping depuis le PC1 vers le serveur, réussi avant ACL</p>
+            </div>
+            <div class="screenshot-container">
+                <img src="../img/CISCOproject/PING PC2 AVANT.png" alt="Ping PC1 vers SERVEUR réussi avant ACL">
+                <p class="screenshot-caption">Ping depuis le PC2 vers le serveur, réussi avant ACL</p>
+            </div>
+        </div>
+
+        <!-- ÉTAPE 4 -->
+        <div class="step-section">
+            <div class="step-header">
+                <div class="step-number">4</div>
+                <h3>Mise en place d'une ACL étendue</h3>
+            </div>
+            <div class="step-content">
+                <p><strong>L'objectif de sécurité est le suivant :</strong></p>
+                <p>Empêcher PC2 (192.168.1.20) d'accéder au serveur (192.168.2.10), tout en autorisant le reste du trafic réseau.</p>
+                <p>Pour cela, j'ai mis en place une <strong>ACL étendue sur le routeur, depuis son CLI</strong>.</p>
+                <p><strong>Règles de l'ACL :</strong></p>
+                <ul class="step-list">
+                    <li>Blocage total du trafic IP entre PC2 et le serveur</li>
+                    <li>Autorisation explicite de tout le reste du trafic</li>
+                </ul>
+            </div>
+            <div class="screenshot-container">
+                <img src="../img/CISCOproject/CLI ACL.png" alt="Configuration de l'ACL en CLI">
+                <p class="screenshot-caption">Configuration de l'ACL en CLI</p>
+            </div>
+        </div>
+
+        <!-- ÉTAPE 5 -->
+        <div class="step-section">
+            <div class="step-header">
+                <div class="step-number">5</div>
+                <h3>Tests après sécurisation</h3>
+            </div>
+            <div class="step-content">
+                <p>Après application de l'ACL :</p>
+                <ul class="step-list">
+                    <li><strong>PC2 → Serveur :</strong> ping échoué</li>
+                    <li><strong>PC2 → Autres hôtes :</strong> communication autorisée</li>
+                    <li><strong>PC1 → Serveur :</strong> accès toujours fonctionnel</li>
+                </ul>
+                <p>Cela démontre que la politique de sécurité est <strong>ciblée, efficace et non bloquante</strong> pour le reste du réseau.</p>
+            </div>
+            <div class="screenshot-container">
+                <img src="../img/CISCOproject/PING PC2 APRES.png" alt="Ping bloqué depuis PC2">
+                <p class="screenshot-caption">Ping bloqué depuis PC2 vers le serveur</p>
+            </div>
+            <div class="screenshot-container">
+                <img src="../img/CISCOproject/PING PC2 TO PC1.png" alt="Ping fonctionnel depuis PC2 vers PC1">
+                <p class="screenshot-caption">Ping fonctionnel depuis PC2 vers PC1</p>
+            </div>
+            <div class="screenshot-container">
+                <img src="../img/CISCOproject/PING PC1 APRES.png" alt="Ping fonctionnel depuis PC1">
+                <p class="screenshot-caption">Ping fonctionnel depuis PC1 vers le serveur</p>
+            </div>
+        </div>
+
+        <!-- CONCLUSION -->
+        <div class="conclusion-box">
+            <h3>Conclusion et Compétences Démontrées</h3>
+            <p>Ce projet illustre une <strong>approche réaliste de sécurisation réseau</strong> basée sur le contrôle des flux entre zones utilisateurs et serveurs.</p>
+            
+            <h4>Compétences Mises en Œuvre :</h4>
+            <div class="skills-grid">
+                <div class="skill-item">Conception de topologie réseau</div>
+                <div class="skill-item">Segmentation en sous-réseaux</div>
+                <div class="skill-item">Configuration Cisco en CLI</div>
+                <div class="skill-item">Mise en place d'ACL étendues</div>
+                <div class="skill-item">Analyse et validation des flux réseau</div>
+                <div class="skill-item">Compréhension des principes de sécurité réseau</div>
+            </div>
+
+            <h4>Ce que j'ai Appris :</h4>
+            <ul style="margin: 15px 0; padding-left: 25px;">
+                <li>Une ACL ne filtre que le trafic qui traverse le routeur</li>
+                <li>L'importance de la <strong>segmentation réseau</strong> pour la sécurité</li>
+                <li>Le rôle fondamental du routage dans le contrôle d'accès</li>
+                <li>La logique <strong>deny spécifique + permit global</strong></li>
+                <li>La méthodologie réseau utilisée en environnement professionnel</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <p>&copy; 2025 Louis Le Bihan. Tous droits réservés.</p>
+    </footer>
+
+    <script src="../js/script.js"></script>
+</body>
+</html>

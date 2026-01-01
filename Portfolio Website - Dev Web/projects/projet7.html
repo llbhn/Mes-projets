@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mon Portfolio Web - Développement Web Complet</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Momo+Signature&family=Oswald:wght@200..700&family=Special+Gothic+Condensed+One&display=swap" rel="stylesheet">
+    <style>
+
+        /* ===== ROOT VARIABLES ===== */
+        :root {
+            --color-light: #f7ebdb;
+            --color-red: #d00404;
+            --color-dark: #001524;
+            --color-blue: #679cbc;
+            
+            --transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .project-detail {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .project-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .project-header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            color: var(--color-light);
+        }
+
+        .project-meta {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+            font-size: 0.95em;
+            color: #666;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: var(--color-light);
+        }
+
+        .objective-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 40px;
+        }
+
+        .objective-box h2 {
+            margin-top: 0;
+            font-size: 1.8em;
+        }
+
+        .objective-box ul {
+            margin: 15px 0;
+            padding-left: 25px;
+        }
+
+        .objective-box li {
+            margin: 8px 0;
+        }
+
+        .step-section {
+            margin-bottom: 50px;
+            padding-bottom: 40px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .step-section:last-child {
+            border-bottom: none;
+        }
+
+        .step-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .step-number {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.5em;
+            flex-shrink: 0;
+        }
+
+        .step-header h3 {
+            margin: 0;
+            font-size: 1.5em;
+            color: var(--color-light);
+        }
+
+        .step-content {
+            margin-left: 65px;
+            margin-bottom: 20px;
+        }
+
+        .step-content p {
+            margin: 10px 0;
+            color: var(--color-light);
+            line-height: 1.6;
+        }
+
+        .step-list {
+            margin: 15px 0;
+            padding-left: 25px;
+            color: var(--color-light);
+        }
+
+        .step-list li {
+            margin: 8px 0;
+            color: var(--color-light);
+        }
+
+        .screenshot-container {
+            margin: 30px 0;
+            text-align: center;
+        }
+
+        .screenshot-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 10px;
+        }
+
+        .screenshot-caption {
+            font-size: 0.95em;
+            color: var(--color-light);
+            font-style: italic;
+            margin-top: 10px;
+        }
+
+        .conclusion-box {
+            background: var(--color-light);
+            padding: 30px;
+            border-left: 5px solid #667eea;
+            border-radius: 5px;
+            margin-top: 40px;
+        }
+
+        .conclusion-box h3 {
+            color: var(--color-blue);
+            margin-top: 0;
+        }
+
+        .conclusion-box p, .conclusion-box h4{
+            color: var(--color-dark);
+        }
+
+        .conclusion-box ul, .conclusion-box li{
+            color: var(--color-dark);
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .skill-item {
+            background: var(--color-blue);
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #e0e0e0;
+            font-size: 0.95em;
+        }
+
+        .projects-section h2 {
+            color: var(--color-light);
+            font-size: 2em;
+            margin: 60px 0 40px;
+            text-align: center;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .project-card {
+            background: rgba(102, 126, 234, 0.1);
+            border: 1px solid #667eea;
+            border-radius: 12px;
+            overflow: hidden;
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .project-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.3);
+            border-color: #764ba2;
+        }
+
+        .project-card-image {
+            width: 100%;
+            height: 200px;
+            overflow: hidden;
+            background: #1a1a1a;
+        }
+
+        .project-card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .project-card:hover .project-card-image img {
+            transform: scale(1.05);
+        }
+
+        .project-card-content {
+            padding: 25px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .project-card h3 {
+            color: var(--color-light);
+            font-size: 1.3em;
+            margin: 0 0 10px;
+        }
+
+        .project-card p {
+            color: #bbb;
+            margin: 10px 0;
+            flex-grow: 1;
+        }
+
+        .project-tags {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-top: 15px;
+        }
+
+        .tag {
+            background: rgba(102, 126, 234, 0.2);
+            color: #667eea;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.85em;
+            border: 1px solid #667eea;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 30px;
+            color: var(--color-light);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .back-link:hover {
+            text-decoration: none;
+            color: #667eea;
+            transition: all 0.3s;
+        }
+
+        @media (max-width: 768px) {
+            .project-header h1 {
+                font-size: 1.8em;
+            }
+
+            .step-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .step-content {
+                margin-left: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="project-detail">
+        <a href="../index.html" class="back-link">← Retour au Portfolio</a>
+
+    <!-- HERO HEADER -->
+    <div class="project-header">
+        <h1>Mon Portfolio Web</h1>
+            <div class="project-meta">
+                <div class="meta-item">2025</div>
+                <div class="meta-item">HTML / CSS / JavaScript</div>
+            </div>
+        </div>
+
+        <div class="objective-box">
+            <h2>Objectif du Projet</h2>
+            <p>Développer un <strong>portfolio web professionnel</strong> présentant l'ensemble de mes projets académiques et compétences en développement web. Ce projet démontre ma capacité à concevoir et mettre en place une plateforme complète <strong>de A à Z</strong>.</p>
+            <ul>
+                <li>Créer une interface moderne et responsive</li>
+                <li>Présenter 6+ projets académiques</li>
+                <li>Implémenter la navigation et l'interactivité</li>
+                <li>Optimiser la performance et l'accessibilité</li>
+                <li>Assurer une compatibilité cross-browser</li>
+                <li>Appliquer une charte graphique cohérente</li>
+            </ul>
+        </div>
+
+        <!-- ÉTAPE 1 : CONCEPTION -->
+        <div class="step-section">
+            <div class="step-header">
+                <div class="step-number">1</div>
+                <h3>Conception et Architecture</h3>
+            </div>
+            <div class="step-content">
+                <p>La première étape a consisté à <strong>définir la structure globale</strong> du portfolio :</p>
+                <ul class="step-list">
+                    <li><strong>Page d'accueil (index.html) :</strong> Présentation personnelle et navigation vers les projets</li>
+                    <li><strong>Pages projets (projet1-7.html) :</strong> Détail de chaque projet avec descriptions et captures</li>
+                    <li><strong>Feuille de styles CSS :</strong> Système de variables pour cohérence visuelle</li>
+                    <li><strong>Scripts JavaScript :</strong> Navigation responsive et interactions</li>
+                </ul>
+                <p>J'ai créé une <strong>architecture modulaire</strong> permettant l'ajout facile de nouveaux projets sans modification du code existant.</p>
+            </div>
+        </div>
+
+        <!-- ÉTAPE 2 : DÉVELOPPEMENT HTML/CSS -->
+        <div class="step-section">
+            <div class="step-header">
+                <div class="step-number">2</div>
+                <h3>Développement Frontend - HTML et CSS3</h3>
+            </div>
+            <div class="step-content">
+                <p>Création d'une <strong>structure sémantique HTML5</strong> avec CSS3 moderne :</p>
+                <ul class="step-list">
+                    <li><strong>Sémantique HTML :</strong> Utilisation de tags appropriés (header, nav, article, section, footer)</li>
+                    <li><strong>CSS Flexbox et Grid :</strong> Layouts responsifs et adaptatifs</li>
+                    <li><strong>Variables CSS :</strong> Gestion centralisée des couleurs et espacements</li>
+                    <li><strong>Media Queries :</strong> Adaptation pour mobile, tablette, desktop</li>
+                    <li><strong>Gradients et animations :</strong> Effets visuels modernes et fluides</li>
+                </ul>
+                <p>Le portfolio utilise une <strong>palette de couleurs cohérente</strong> avec transitions douces pour une expérience utilisateur optimale.</p>
+            </div>
+            <div class="screenshot-container">
+                <img src="../img/PortfolioProjectImg.png" alt="Aperçu du Portfolio">
+                <p class="screenshot-caption">📸 Vue d'ensemble du Portfolio Web</p>
+            </div>
+        </div>
+
+        <!-- ÉTAPE 3 : INTÉGRATION DES PROJETS -->
+        <div class="step-section">
+            <div class="step-header">
+                <div class="step-number">3</div>
+                <h3>Intégration des Projets Académiques</h3>
+            </div>
+            <div class="step-content">
+                <p>Chaque projet a été intégré avec <strong>son propre contenu détaillé</strong> :</p>
+                <ul class="step-list">
+                    <li><strong>Projet 1 :</strong> Simulation Wazuh - Détection de brute force</li>
+                    <li><strong>Projet 2 :</strong> Cisco Packet Tracer - Simulation réseau</li>
+                    <li><strong>Projet 3 :</strong> HTB - Capture The Flag</li>
+                    <li><strong>Projet 4 :</strong> Sokoban Game - WASM et C</li>
+                    <li><strong>Projet 5 :</strong> Quiz Game - HTML/CSS/JavaScript</li>
+                    <li><strong>Projet 6 :</strong> Création d'un site web de présentation de l'Argentine - Site web complet</li>
+                    <li><strong>Projet 7 :</strong> Portfolio - Ce projet lui-même</li>
+                </ul>
+                <p>Chaque page projet inclut <strong>captures d'écran, descriptions détaillées et technologies utilisées</strong>.</p>
+            </div>
+        </div>
+
+        <!-- ÉTAPE 4 : FONCTIONNALITÉS AVANCÉES -->
+        <div class="step-section">
+            <div class="step-header">
+                <div class="step-number">4</div>
+                <h3>Fonctionnalités et Optimisations</h3>
+            </div>
+            <div class="step-content">
+                <p>Le portfolio incorpore <strong>plusieurs fonctionnalités avancées</strong> :</p>
+                <ul class="step-list">
+                    <li><strong>Navigation responsive :</strong> Menu hamburger sur mobile</li>
+                    <li><strong>Système de recherche :</strong> Filtrage des projets</li>
+                    <li><strong>Animations CSS :</strong> Effets de survol et transitions</li>
+                    <li><strong>Performance :</strong> Images optimisées, CSS/JS minifiés</li>
+                    <li><strong>Accessibilité :</strong> Contraste WCAG AAA, alt text, navigation au clavier</li>
+                    <li><strong>SEO :</strong> Meta tags, structure heading correcte</li>
+                </ul>
+                <p><strong>Technologies utilisées :</strong></p>
+                <ul class="step-list">
+                    <li>HTML5 - Structure sémantique</li>
+                    <li>CSS3 - Flexbox, Grid, animations</li>
+                    <li>JavaScript Vanilla - Interactivité et DOM manipulation</li>
+                    <li>Google Fonts - Typographie moderne</li>
+                    <li>Responsive Design - Mobile-first approach</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- PROJECTS SHOWCASE -->
+        <section class="projects-section">
+            <h2>📂 Projets Présentés</h2>
+            <div class="projects-grid">
+
+                  <div class="project-card">
+                    <div class="project-card-image">
+                        <img src="../img/WazuhProjectImg.png" alt="Wazuh SIEM">
+                    </div>
+                    <div class="project-card-content">
+                        <h3>Simulation Wazuh</h3>
+                        <p>Simulation d'une attaque par force brute RDP et détection via SIEM Wazuh. Démonstration de compétences SOC/Blue Team.</p>
+                        <div class="project-tags">
+                            <span class="tag">Wazuh</span>
+                            <span class="tag">SIEM</span>
+                            <span class="tag">Cybersécurité</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-card-image">
+                        <img src="../img/CiscoProjectImg.png" alt="Cisco Packet Tracer">
+                    </div>
+                    <div class="project-card-content">
+                        <h3>Cisco Packet Tracer</h3>
+                        <p>Simulation réseau complète avec configuration de routeurs, switches et protocoles réseau. Modélisation d'une architecture d'entreprise.</p>
+                        <div class="project-tags">
+                            <span class="tag">Cisco</span>
+                            <span class="tag">Réseau</span>
+                            <span class="tag">TCP/IP</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-card-image">
+                        <img src="../img/SokobanProjectImg.png" alt="Sokoban Game">
+                    </div>
+                    <div class="project-card-content">
+                        <h3>Jeu Sokoban</h3>
+                        <p>Un jeu de puzzle classique porté en WebAssembly avec interface terminal interactive directement dans le navigateur.</p>
+                        <div class="project-tags">
+                            <span class="tag">C</span>
+                            <span class="tag">WebAssembly</span>
+                            <span class="tag">JavaScript</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-card-image">
+                        <img src="../img/QuizProjectImg.png" alt="Quiz Game">
+                    </div>
+                    <div class="project-card-content">
+                        <h3>Quiz Game</h3>
+                        <p>Une application interactive de quiz avec système de points et questions variées. Parfait pour le divertissement éducatif.</p>
+                        <div class="project-tags">
+                            <span class="tag">HTML5</span>
+                            <span class="tag">CSS3</span>
+                            <span class="tag">JavaScript</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-card-image">
+                        <img src="../img/ArgentinaProjectImg.png" alt="Argentina Tourism">
+                    </div>
+                    <div class="project-card-content">
+                        <h3>Création d'un site web de présentation de l'Argentine</h3>
+                        <p>Un site touristique complet présentant les merveilles de l'Argentine avec design responsive et intégration cartographique.</p>
+                        <div class="project-tags">
+                            <span class="tag">HTML5</span>
+                            <span class="tag">CSS3</span>
+                            <span class="tag">Responsive</span>
+                        </div>
+                    </div>
+                </div>
+
+              
+            </div>
+        </section>
+
+        <!-- CONCLUSION -->
+        <div class="conclusion-box">
+            <h3>Résumé et Compétences Démontrées</h3>
+            <p>Ce portfolio représente un <strong>projet complet de développement web</strong> montrant mes compétences en conception, développement et déploiement.</p>
+            
+            <h4>Compétences Mises en Œuvre :</h4>
+            <div class="skills-grid">
+                <div class="skill-item">HTML5 sémantique</div>
+                <div class="skill-item">CSS3 moderne (Flexbox, Grid)</div>
+                <div class="skill-item">JavaScript Vanilla</div>
+                <div class="skill-item">Responsive Design</div>
+                <div class="skill-item">Performance Web</div>
+                <div class="skill-item">Accessibilité WCAG</div>
+                <div class="skill-item">Architecture modulaire</div>
+                <div class="skill-item">Gestion de projet</div>
+            </div>
+
+            <h4>Ce que j'ai Appris :</h4>
+            <ul style="margin: 15px 0; padding-left: 25px;">
+                <li>Importance de la <strong>planification</strong> dans un projet web</li>
+                <li><strong>Réutilisabilité du code</strong> et DRY principle</li>
+                <li>Impact de la <strong>performance</strong> sur l'expérience utilisateur</li>
+                <li>Valeur de l'<strong>accessibilité</strong> et de l'inclusion</li>
+                <li><strong>Maintenance et scalabilité</strong> des projets web</li>
+                <li>Importance du <strong>responsive design</strong> moderne</li>
+            </ul>
+</div>
+
+</body>
+</html>

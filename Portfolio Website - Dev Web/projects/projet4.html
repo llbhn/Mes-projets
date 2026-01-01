@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sokoban - Jeu de Puzzle en Langage C</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Momo+Signature&family=Oswald:wght@200..700&family=Special+Gothic+Condensed+One&display=swap" rel="stylesheet">
+    <style>
+        /* ===== ROOT VARIABLES ===== */
+        :root {
+            --color-light: #f7ebdb;
+            --color-red: #d00404;
+            --color-dark: #001524;
+            --color-blue: #679cbc;
+            --transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .project-detail {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .project-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .project-header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            color: var(--color-light);
+        }
+
+        .project-meta {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+            font-size: 0.95em;
+            color: #666;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: var(--color-light);
+        }
+
+        .objective-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 40px;
+        }
+
+        .objective-box h2 {
+            margin-top: 0;
+            font-size: 1.8em;
+        }
+
+        .objective-box ul {
+            margin: 15px 0;
+            padding-left: 25px;
+        }
+
+        .objective-box li {
+            margin: 8px 0;
+        }
+
+        .step-section {
+            margin-bottom: 50px;
+            padding-bottom: 40px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .step-section:last-child {
+            border-bottom: none;
+        }
+
+        .step-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .step-number {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.5em;
+            flex-shrink: 0;
+        }
+
+        .step-header h3 {
+            margin: 0;
+            font-size: 1.5em;
+            color: var(--color-light);
+        }
+
+        .step-content {
+            margin-left: 65px;
+            margin-bottom: 20px;
+        }
+
+        .step-content p {
+            margin: 10px 0;
+            color: var(--color-light);
+            line-height: 1.6;
+        }
+
+        .step-list {
+            margin: 15px 0;
+            padding-left: 25px;
+            color: var(--color-light);
+        }
+
+        .step-list li {
+            margin: 8px 0;
+            color: var(--color-light);
+        }
+
+        .code-block {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            border-left: 4px solid #667eea;
+        }
+
+        .tech-stack {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .tech-item {
+            background: rgba(102, 126, 234, 0.1);
+            border: 1px solid #667eea;
+            padding: 15px;
+            border-radius: 8px;
+            color: var(--color-light);
+            text-align: center;
+        }
+
+        .tech-item strong {
+            color: #667eea;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .feature-card {
+            background: linear-gradient(135deg, rgba(62, 129, 168, 0.4), rgba(39, 98, 143, 0.2));
+            border: 1px solid  rgba(14, 72, 106, 0.9);
+            padding: 20px;
+            border-radius: 8px;
+            color: var(--color-light);
+        }
+
+        .feature-card h4 {
+            color: var(--color-light);
+            margin-top: 0;
+        }
+
+        .back-button {
+            display: inline-block;
+            margin-bottom: 30px;
+            color: var(--color-light);
+            text-decoration: none;
+            font-weight: bold;
+            transition: var(--transition);
+        }
+
+        .back-button:hover {
+            color: #2ecc71;
+        }
+
+        .play-button {
+            display: inline-block;
+            margin: 30px auto;
+            padding: 15px 40px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 1.2em;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .download-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .play-button:active {
+            transform: translateY(-1px);
+        }
+
+        .button-container {
+            text-align: center;
+        }
+
+        .conclusion-box {
+            background: var(--color-light);
+            padding: 30px;
+            border-left: 5px solid #667eea;
+            border-radius: 5px;
+            margin-top: 40px;
+        }
+
+        .conclusion-box h3 {
+            color: var(--color-blue);
+            margin-top: 0;
+        }
+
+        .conclusion-box p, .conclusion-box h4{
+            color: var(--color-dark);
+        }
+
+        .conclusion-box ul, .conclusion-box li{
+            color: var(--color-dark);
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .skill-item {
+            background: var(--color-blue);
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #e0e0e0;
+            font-size: 0.95em;
+        }
+    </style>
+</head>
+<body>
+
+<div class="project-detail">
+    <a href="../index.html" class="back-button">← Retour au Portfolio</a>
+
+    <!-- HEADER -->
+    <div class="project-header">
+        <h1>Sokoban Terminal</h1>
+        <div class="project-meta">
+            <span class="meta-item">2025</span>
+            <span class="meta-item">Langage C</span>
+            <span class="meta-item">Projet SAE 1ère année</span>
+        </div>
+    </div>
+
+    <!-- BOUTON JOUER -->
+    <div class="button-container">
+        <a href="sokoban-wasm/index.html" class="play-button">Jouer au Jeu</a>
+    </div>
+
+    <!-- OBJECTIFS -->
+    <div class="objective-box">
+        <h2>Objectif du Projet</h2>
+        <p>Développer un jeu de puzzle Sokoban fonctionnel en langage C, jouable directement dans le terminal. Le joueur doit pousser des caisses sur des cibles spécifiques tout en optimisant le nombre de déplacements.</p>
+        <ul>
+            <li>Créer un moteur de jeu 2D en C pur</li>
+            <li>Gérer les déplacements du joueur et des caisses</li>
+            <li>Implémenter un système de niveaux (6 niveaux disponibles)</li>
+            <li>Gérer les entrées clavier sans bloquer l'affichage</li>
+            <li>Sauvegarde et chargement de parties</li>
+        </ul>
+    </div>
+
+    <!-- ÉTAPE 1: ARCHITECTURE -->
+    <div class="step-section">
+        <div class="step-header">
+            <div class="step-number">1</div>
+            <h3>Architecture & Structure</h3>
+        </div>
+        <div class="step-content">
+            <p>Le projet utilise une architecture modulaire avec des fonctions organisées par thème :</p>
+            <ul class="step-list">
+                <li><strong>Gestion du plateau :</strong> Affichage et manipulation de la grille 12x12</li>
+                <li><strong>Système de déplacement :</strong> Mouvements du joueur et des caisses</li>
+                <li><strong>Gestion des fichiers :</strong> Chargement des niveaux et sauvegarde des parties</li>
+                <li><strong>Entrées clavier :</strong> Utilisation de termios pour une lecture non-bloquante</li>
+            </ul>
+            <p><strong>Plateau :</strong> Grille de 12x12 caractères représentant l'environnement du jeu.</p>
+            <p><strong>Éléments du jeu :</strong></p>
+            <div class="tech-stack">
+                <div class="tech-item">@ Joueur</div>
+                <div class="tech-item">+ Joueur sur cible</div>
+                <div class="tech-item">$ Caisse</div>
+                <div class="tech-item">* Caisse sur cible</div>
+                <div class="tech-item"># Mur</div>
+                <div class="tech-item">. Cible</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ÉTAPE 2: FONCTIONNALITÉS -->
+    <div class="step-section">
+        <div class="step-header">
+            <div class="step-number">2</div>
+            <h3>Système de Déplacement</h3>
+        </div>
+        <div class="step-content">
+            <p>Le système de déplacement gère plusieurs cas :</p>
+            <ul class="step-list">
+                <li><strong>Déplacement simple :</strong> Le joueur se déplace sur une case vide ou une cible</li>
+                <li><strong>Déplacement avec caisse :</strong> Le joueur pousse une caisse vers une destination valide</li>
+                <li><strong>Gestion des collisions :</strong> Détection des murs et limites de la grille</li>
+                <li><strong>Vérification de victoire :</strong> Le jeu se termine quand toutes les caisses sont sur des cibles</li>
+            </ul>
+            <p><strong>Contrôles :</strong></p>
+            <div class="code-block">
+Z : Haut      Q : Gauche<br>
+S : Bas       D : Droite<br>
+X : Abandonner<br>
+R : Recommencer
+            </div>
+        </div>
+    </div>
+
+    <!-- ÉTAPE 3: FONCTIONNALITÉS AVANCÉES -->
+    <div class="step-section">
+        <div class="step-header">
+            <div class="step-number">3</div>
+            <h3>Fonctionnalités Avancées</h3>
+        </div>
+        <div class="step-content">
+            <p>Le jeu intègre plusieurs fonctionnalités pour une meilleure expérience :</p>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <h4>6 Niveaux Progressifs</h4>
+                    <p>De difficultés variables, chaque niveau présenté dans un fichier séparé (.sok et .dep)</p>
+                </div>
+                <div class="feature-card">
+                    <h4>Sauvegarde de Partie</h4>
+                    <p>Possibilité de sauvegarder l'état actuel du plateau pour reprendre plus tard</p>
+                </div>
+                <div class="feature-card">
+                    <h4>Compteur de Mouvements</h4>
+                    <p>Affichage du nombre de déplacements pour optimiser les performances</p>
+                </div>
+                <div class="feature-card">
+                    <h4>Entrées Non-Bloquantes</h4>
+                    <p>Utilisation de termios pour une lecture clavier fluide sans bloquer le rendu</p>
+                </div>
+                <div class="feature-card">
+                    <h4>Détection Cible</h4>
+                    <p>Différenciation entre éléments sur cible et en dehors pour un affichage correct</p>
+                </div>
+                <div class="feature-card">
+                    <h4>Recommencer</h4>
+                    <p>Possibilité de recommencer le niveau actuel sans perdre la progression globale</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CONCLUSION -->
+        <div class="conclusion-box">
+            <h3>Conclusion et Compétences Clés Démontrées</h3>
+            <p>Ce parcours illustre une <strong>approche intéressante et équilibrée</strong> du développement en langage C et de logique d'algorithmie.</p>
+            
+            <h4>Compétences Clés Démontrées :</h4>
+            <div class="skills-grid">
+                <div class="skill-item">Compréhension d'un cahier des charges</div>
+                <div class="skill-item">Création et utilisation de procédures et fonctions</div>
+                <div class="skill-item">Programmation avec tableaux à 2 dimensions</div>
+                <div class="skill-item">Debuging</div>
+                <div class="skill-item">Respect de convention de codage, et d'une deadline fixée en amont</div>
+            </div>
+
+        </div>
+
+</div>
+
+</body>
+</html>

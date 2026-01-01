@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Argentina Tourism Website - Développement Web</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Momo+Signature&family=Oswald:wght@200..700&family=Special+Gothic+Condensed+One&display=swap" rel="stylesheet">
+    <style>
+        /* ===== ROOT VARIABLES ===== */
+        :root {
+            --color-light: #f7ebdb;
+            --color-red: #d00404;
+            --color-dark: #001524;
+            --color-blue: #679cbc;
+            --transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .project-detail {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .project-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .project-header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            color: var(--color-light);
+        }
+
+        .project-meta {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+            font-size: 0.95em;
+            color: #666;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: var(--color-light);
+        }
+
+        .objective-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 40px;
+        }
+
+        .objective-box h2 {
+            margin-top: 0;
+            font-size: 1.8em;
+        }
+
+        .objective-box ul {
+            margin: 15px 0;
+            padding-left: 25px;
+        }
+
+        .objective-box li {
+            margin: 8px 0;
+        }
+
+        .step-section {
+            margin-bottom: 50px;
+            padding-bottom: 40px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .step-section:last-child {
+            border-bottom: none;
+        }
+
+        .step-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .step-number {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.5em;
+            flex-shrink: 0;
+        }
+
+        .step-header h3 {
+            margin: 0;
+            font-size: 1.5em;
+            color: var(--color-light);
+        }
+
+        .step-content {
+            margin-left: 65px;
+            margin-bottom: 20px;
+        }
+
+        .step-content p {
+            margin: 10px 0;
+            color: var(--color-light);
+            line-height: 1.6;
+        }
+
+        .step-list {
+            margin: 15px 0;
+            padding-left: 25px;
+            color: var(--color-light);
+        }
+
+        .step-list li {
+            margin: 8px 0;
+            color: var(--color-light);
+        }
+
+        .code-block {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            border-left: 4px solid #667eea;
+        }
+
+        .tech-stack {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .tech-item {
+            background: rgba(102, 126, 234, 0.1);
+            border: 1px solid #667eea;
+            padding: 15px;
+            border-radius: 8px;
+            color: var(--color-light);
+            text-align: center;
+        }
+
+        .tech-item strong {
+            color: #667eea;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .feature-card {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.2), rgba(118, 75, 162, 0.2));
+            border: 1px solid #667eea;
+            padding: 20px;
+            border-radius: 8px;
+            color: var(--color-light);
+        }
+
+        .feature-card h4 {
+            color: #667eea;
+            margin-top: 0;
+        }
+
+        .back-button {
+            display: inline-block;
+            margin-bottom: 30px;
+            color: var(--color-light);
+            text-decoration: none;
+            font-weight: bold;
+            transition: var(--transition);
+        }
+
+        .back-button:hover {
+            color: #667eea;
+        }
+
+        .download-button {
+            display: inline-block;
+            margin: 30px auto;
+            padding: 15px 40px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 1.2em;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .download-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .download-button:active {
+            transform: translateY(-1px);
+        }
+
+        .button-container {
+            text-align: center;
+        }
+
+        .download-section {
+            background: rgba(102, 126, 234, 0.1);
+            border: 2px solid #667eea;
+            border-radius: 8px;
+            padding: 30px;
+            margin-top: 40px;
+            text-align: center;
+        }
+
+        .download-section h2 {
+            color: #667eea;
+            margin-top: 0;
+        }
+
+        .download-section p {
+            color: var(--color-light);
+            margin-bottom: 20px;
+        }
+
+        .screenshot-container {
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .screenshot {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            border: 1px solid #667eea;
+        }
+
+        .screenshot-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .screenshot-item {
+            text-align: center;
+        }
+
+        .screenshot-item p {
+            color: var(--color-light);
+            margin-top: 10px;
+            font-size: 0.9em;
+        }
+
+        .screenshot-grid-mobile {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+         .conclusion-box {
+            background: var(--color-light);
+            padding: 30px;
+            border-left: 5px solid #667eea;
+            border-radius: 5px;
+            margin-top: 40px;
+        }
+
+        .conclusion-box h3 {
+            color: var(--color-blue);
+            margin-top: 0;
+        }
+
+        .conclusion-box p, .conclusion-box h4{
+            color: var(--color-dark);
+        }
+
+        .conclusion-box ul, .conclusion-box li{
+            color: var(--color-dark);
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .skill-item {
+            background: var(--color-blue);
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #e0e0e0;
+            font-size: 0.95em;
+        }
+
+        @media (max-width: 768px) {
+            .project-header h1 {
+                font-size: 1.8em;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .step-content {
+                margin-left: 0;
+            }
+
+            .screenshot-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="project-detail">
+    <a href="../index.html" class="back-button">← Retour au Portfolio</a>
+
+    <!-- HEADER -->
+    <div class="project-header">
+        <h1>Création d'un site web de présentation de l'Argentine</h1>
+        <div class="project-meta">
+            <span class="meta-item">2025</span>
+            <span class="meta-item">HTML / CSS / JavaScript</span>
+        </div>
+    </div>
+
+    <!-- OBJECTIFS -->
+    <div class="objective-box">
+        <h2>Objectif du Projet</h2>
+        <p>Développer un site web touristique complet sur l'Argentine. Ce projet présente les merveilles naturelles, culturelles et historiques de l'Argentine à travers une interface web interactive et responsive.</p>
+        <ul>
+            <li>Créer une interface web attractive et intuitive</li>
+            <li>Présenter l'Argentine sous différentes thématiques (géographie, culture, personnages, art)</li>
+            <li>Implémenter une navigation fluide et logique</li>
+            <li>Intégrer des médias (images, cartes, vidéos)</li>
+            <li>Assurer une compatibilité responsive (mobile/desktop)</li>
+            <li>Appliquer les principes d'UX/UI modernes</li>
+        </ul>
+    </div>
+
+    <!-- ÉTAPE 1: STRUCTURE -->
+    <div class="step-section">
+        <div class="step-header">
+            <div class="step-number">1</div>
+            <h3>Architecture du Site</h3>
+        </div>
+        <div class="step-content">
+            <p>Le site est organisé autour de 4 sections principales accessibles via un menu de navigation persistent :</p>
+            <ul class="step-list">
+                <li><strong>Accueil (index.html) :</strong> Page principale présentant l'Argentine avec géographie et carte interactive</li>
+                <li><strong>Personnages (persoNav.html) :</strong> Figures importantes de l'histoire argentine (Maradona, Eva Perón, etc.)</li>
+                <li><strong>Art (ArtNav.html) :</strong> Culture artistique et musicale (street art, tango etc.)</li>
+                <li><strong>Lieux (lieuxNav.html) :</strong> Destinations touristiques incontournables (Buenos Aires, Patagonie, etc.)</li>
+            </ul>
+            <p><strong>Exemple de pages :</strong></p>
+            <div class="screenshot-grid">
+                <div class="screenshot-item">
+                    <img src="../img/Argentina/personnagePC.png" alt="Page Personnages - Version Desktop" class="screenshot">
+                    <p><em>Page Personnages (Desktop)</em></p>
+                </div>
+                <div class="screenshot-item">
+                    <img src="../img/Argentina/artPC.png" alt="Page Art - Version Desktop" class="screenshot">
+                    <p><em>Page Art (Desktop)</em></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ÉTAPE 2: FONCTIONNALITÉS -->
+    <div class="step-section">
+        <div class="step-header">
+            <div class="step-number">2</div>
+            <h3>Pages Spécialisées</h3>
+        </div>
+        <div class="step-content">
+            <p>Chaque section thématique dispose de pages détaillées :</p>
+            <ul class="step-list">
+                <li><strong>Pages Personnages :</strong> Biographies illustrées avec contexte historique</li>
+                <li><strong>Pages Art :</strong> Galeries d'images et descriptions des mouvements artistiques</li>
+                <li><strong>Pages Lieux :</strong> Descriptions détaillées avec images et cartes d'accès</li>
+                <li><strong>Intégration multimédia :</strong> Cartes Google Maps, Slider d'images, images optimisées, textes enrichis</li>
+            </ul>
+            <p><strong>Adaptation Mobile :</strong></p>
+            <div class="screenshot-grid-mobile">
+                <div class="screenshot-item">
+                    <img src="../img/Argentina/personnageMOBILE.png" alt="Page Personnages - Version Mobile" class="screenshot">
+                    <p><em>Personnages (Mobile)</em></p>
+                </div>
+                <div class="screenshot-item">
+                    <img src="../img/Argentina/artMOBILE.png" alt="Page Art - Version Mobile" class="screenshot">
+                    <p><em>Art (Mobile)</em></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ÉTAPE 3: DESIGN & STYLES -->
+    <div class="step-section">
+        <div class="step-header">
+            <div class="step-number">3</div>
+            <h3>Design Responsif</h3>
+        </div>
+        <div class="step-content">
+            <p>Le design respecte les standards du web moderne :</p>
+            <ul class="step-list">
+                <li><strong>Palette de couleurs :</strong> Couleurs argentines (bleu et blanc) avec accents verts</li>
+                <li><strong>Typography :</strong> Hiérarchie claire avec différents niveaux de titres</li>
+                <li><strong>Layout Grid :</strong> Système de grille flexible pour adaptabilité</li>
+                <li><strong>Images optimisées :</strong> Formats modernes et chargement efficace</li>
+                <li><strong>Responsive design :</strong> Adaptation mobile, tablette, desktop</li>
+            </ul>
+            <p><strong>Système Responsive :</strong></p>
+            <div class="tech-stack">
+                <div class="tech-item">Mobile First Approach</div>
+                <div class="tech-item">Flexbox & Grid</div>
+                <div class="tech-item">Media Queries Optimisées</div>
+                <div class="tech-item">Images Fluides</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ÉTAPE 4: TECHNOLOGIES -->
+    <div class="step-section">
+        <div class="step-header">
+            <div class="step-number">4</div>
+            <h3>Technologies & Points Clés</h3>
+        </div>
+        <div class="step-content">
+            <p><strong>Stack technologique :</strong></p>
+            <div class="tech-stack">
+                <div class="tech-item">HTML5 : Structure sémantique</div>
+                <div class="tech-item">CSS3 : Styling moderne et Flexbox/Grid</div>
+                <div class="tech-item">JavaScript : Interactivité et DOM manipulation</div>
+                <div class="tech-item">Responsive : Mobile-first approach</div>
+            </div>
+
+            <p><strong>Fonctionnalités interactives :</strong></p>
+            <ul class="step-list">
+                <li>Menu de navigation responsive avec icônes</li>
+                <li>Intégration de cartes Google Maps interactives</li>
+                <li>Animations CSS fluides au survol</li>
+                <li>Optimisation des images pour la web</li>
+                <li>Accessibilité et sémantique HTML</li>
+            </ul>
+
+            <p><strong>Apprentissages :</strong></p>
+            <p>Ce projet démontre la maîtrise complète du développement web côté client. Il illustre comment créer un site professional responsive qui combine fonctionnalité, esthétique et performance. Le projet met en avant les compétences en HTML structuré, CSS moderne, et l'intégration de services tiers comme Google Maps.</p>
+        </div>
+    </div>
+
+           <!-- CONCLUSION -->
+        <div class="conclusion-box">
+            <h3>Conclusion et Compétences Clés Démontrées</h3>
+            <p>Ce parcours illustre une <strong>approche intéressante et équilibrée</strong> du développement en langage C et de logique d'algorithmie.</p>
+            
+            <h4>Compétences Clés Démontrées :</h4>
+            <div class="skills-grid">
+                <div class="skill-item">Création de maquette avec Figma</div>
+                <div class="skill-item">Design Moderne</div>
+                <div class="skill-item"> Création de design responsive</div>
+                <div class="skill-item">Intégration cartographique</div>
+            </div>
+
+        </div>
+
+   
+
+   
+
+</div>
+
+</body>
+</html>

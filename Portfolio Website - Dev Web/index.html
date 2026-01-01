@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Louis Le Bihan - Cybersécurité & IT</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Momo+Signature&family=Oswald:wght@200..700&family=Special+Gothic+Condensed+One&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- HEADER NAVIGATION -->
+    <header class="header">
+        <nav class="navbar">
+            <div class="nav-brand">Louis Le Bihan</div>
+            <ul class="nav-menu">
+                <li><a href="#home" class="nav-link">Accueil</a></li>
+                <li><a href="#projects" class="nav-link">Projets</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1 class="hero-title">Louis Le Bihan</h1>
+                <p class="hero-subtitle">En recherche d'alternance en cybersécurité et/ou développement informatique</p>
+                <p class="hero-description">Étudiant BUT Informatique 1ère année à Lannion</p>
+                <div class="hero-cta">
+                    <a href="#projects" class="btn btn-primary">Découvrir mes projets</a>
+                    <a href="#contact" class="btn btn-secondary">Me contacter</a>
+                </div>
+            </div>
+            <div class="hero-image">
+                <img src="img/PP.png" alt="Louis Le Bihan" class="profile-pic">
+            </div>
+        </div>
+    </section>
+
+    <!-- PROJECTS SECTION -->
+    <section id="projects" class="projects-section">
+        <h2 class="section-title">Mes Projets</h2>
+
+        <!-- Cybersécurité -->
+        <div class="projects-category">
+            <h3 class="category-title">🔐 Cybersécurité</h3>
+            
+            <article class="project-card" onclick="goToProject('projet1')">
+                <div class="project-image">
+                    <img src="img/WazuhProjectImg.png" alt="Simulation d'attaque par force brute avec Wazuh">
+                </div>
+                <div class="project-info">
+                    <h3>Simulation d'une attaque par force brute et détection avec Wazuh (Mini SOC)</h3>
+                    <p>Mise en place d'un environnement de simulation d'attaque avec détection en temps réel</p>
+                </div>
+            </article>
+
+            <article class="project-card" onclick="goToProject('projet2')">
+                <div class="project-image">
+                    <img src="img/CiscoProjectImg.png" alt="Réseau sécurisé avec ACL">
+                </div>
+                <div class="project-info">
+                    <h3>Segmentation LAN et contrôle d’accès par ACL (Cisco Packet Tracer)</h3>
+                    <p>Configuration d'un réseau avec contrôles d'accès et sécurité réseau</p>
+                </div>
+            </article>
+
+            <article class="project-card" onclick="goToProject('projet3')">
+                <div class="project-image">
+                    <img src="img/HtbProjectImg.png" alt="Hack The Box">
+                </div>
+                <div class="project-info">
+                    <h3>Mon parcours sur Hack The Box</h3>
+                    <p>Défis de cybersécurité et apprentissage continu en pentesting</p>
+                </div>
+            </article>
+        </div>
+
+        <!-- Développement Informatique -->
+        <div class="projects-category">
+            <h3 class="category-title">👾 Développement Informatique</h3>
+
+            <article class="project-card" onclick="goToProject('projet4')">
+                <div class="project-image">
+                    <img src="img/SokobanProjectImg.png" alt="Jeu Sokoban en C">
+                </div>
+                <div class="project-info">
+                    <h3>Création du jeu Sokoban en langage C</h3>
+                    <p>Développement d'un jeu de puzzle avec gestion de la logique en C</p>
+                </div>
+            </article>
+
+            <article class="project-card" onclick="goToProject('projet5')">
+                <div class="project-image">
+                    <img src="img/QuizProjectImg.png" alt="Quiz Builder">
+                </div>
+                <div class="project-info">
+                    <h3>Développement d'un Quiz Builder</h3>
+                    <p>Application permettant de créer et gérer des quiz interactifs</p>
+                </div>
+            </article>
+        </div>
+
+        <!-- Développement Web -->
+        <div class="projects-category">
+            <h3 class="category-title">🎨 Développement Web</h3>
+
+            <article class="project-card" onclick="goToProject('projet6')">
+                <div class="project-image">
+                    <img src="img/ArgentinaProjectImg.png" alt="Site Argentine">
+                </div>
+                <div class="project-info">
+                    <h3>Création d'un site web de présentation de l'Argentine</h3>
+                    <p>Site responsif présentant la culture et les attractions de l'Argentine</p>
+                </div>
+            </article>
+
+            <article class="project-card" onclick="goToProject('projet7')">
+                <div class="project-image">
+                    <img src="img/PortfolioProjectImg.png" alt="Portfolio">
+                </div>
+                <div class="project-info">
+                    <h3>Création d'un portfolio</h3>
+                    <p>Portfolio personnel présentant mes compétences et réalisations</p>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <!-- RESOURCES SECTION -->
+    <section class="resources-section">
+        <h2 class="section-title">Ressources</h2>
+        <div class="resources-container">
+            <a href="#" class="resource-card" target="_blank">
+                <svg class="resource-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/>
+                </svg>
+                <h3>Consulter mon CV</h3>
+            </a>
+            <a href="https://github.com/llbhn" class="resource-card" target="_blank">
+                <svg class="resource-icon" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v 3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                </svg>
+                <h3>Mon GitHub</h3>
+            </a>
+        </div>
+    </section>
+
+    <!-- CONTACT SECTION -->
+    <section id="contact" class="contact-section">
+        <h2 class="section-title">Me Contacter</h2>
+        <form class="contact-form" id="contactForm">
+            <div class="form-group">
+                <label for="name">Nom</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="subject">Sujet</label>
+                <input type="text" id="subject" name="subject" required>
+            </div>
+            <div class="form-group">
+                <label for="message">Message</label>
+                <textarea id="message" name="message" rows="6" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Envoyer</button>
+        </form>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <p>&copy; 2025 Louis Le Bihan. Tous droits réservés.</p>
+    </footer>
+
+    <script src="js/script.js"></script>
+</body>
+</html>

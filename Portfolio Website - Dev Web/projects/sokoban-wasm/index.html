@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sokoban Jouable - Terminal Web</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/xterm@5.3.0/css/xterm.min.css" />
+    <link rel="stylesheet" href="../../css/styles.css">
+    <style>
+        :root {
+            --color-light: #f7ebdb;
+            --color-red: #d00404;
+            --color-dark: #001524;
+            --color-blue: #679cbc;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: var(--color-dark);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .back-button {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: var(--color-light);
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .back-button:hover {
+            color: #2ecc71;
+        }
+
+        h1 {
+            color: var(--color-light);
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+        }
+
+        .game-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        #terminal {
+            background: #000;
+            border: 2px solid #2ecc71;
+            border-radius: 8px;
+            padding: 0;
+            min-height: 600px;
+            font-family: 'Courier New', monospace;
+        }
+
+        .xterm {
+            padding: 10px !important;
+        }
+
+        .controls {
+            background: linear-gradient(135deg, rgba(46, 204, 113, 0.1), rgba(39, 174, 96, 0.1));
+            border: 1px solid #2ecc71;
+            border-radius: 8px;
+            padding: 20px;
+            color: var(--color-light);
+        }
+
+        .controls h3 {
+            color: #2ecc71;
+            margin-top: 0;
+            text-align: center;
+        }
+
+        .control-group {
+            margin-bottom: 20px;
+        }
+
+        .control-group label {
+            display: block;
+            font-weight: bold;
+            color: #2ecc71;
+            margin-bottom: 8px;
+            font-size: 0.9em;
+        }
+
+        .level-select {
+            width: 100%;
+            padding: 8px;
+            background: #001524;
+            color: var(--color-light);
+            border: 1px solid #2ecc71;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .level-select:hover {
+            background: #002040;
+        }
+
+        .button-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .control-btn {
+            padding: 10px;
+            background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+            font-size: 0.85em;
+        }
+
+        .control-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(46, 204, 113, 0.3);
+        }
+
+        .control-btn:active {
+            transform: translateY(0);
+        }
+
+        .status {
+            text-align: center;
+            padding: 10px;
+            background: rgba(46, 204, 113, 0.1);
+            border-radius: 4px;
+            margin-top: 15px;
+        }
+
+        .status.win {
+            background: rgba(46, 204, 113, 0.3);
+            color: #2ecc71;
+            font-weight: bold;
+        }
+
+        .instructions {
+            background: linear-gradient(135deg, rgba(103, 156, 188, 0.1), rgba(103, 156, 188, 0.05));
+            border: 1px solid #679cbc;
+            border-radius: 8px;
+            padding: 20px;
+            color: var(--color-light);
+            margin-top: 40px;
+        }
+
+        .instructions h3 {
+            color: #679cbc;
+            margin-top: 0;
+        }
+
+        .instructions ul {
+            margin: 10px 0;
+            padding-left: 25px;
+        }
+
+        .instructions li {
+            margin: 8px 0;
+            font-size: 0.95em;
+        }
+
+        .keyboard-legend {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .key {
+            background: #001524;
+            padding: 8px;
+            border-radius: 4px;
+            border-left: 3px solid #679cbc;
+            font-size: 0.85em;
+        }
+
+        .key strong {
+            color: #679cbc;
+        }
+
+        @media (max-width: 768px) {
+            .game-wrapper {
+                grid-template-columns: 1fr;
+            }
+
+            h1 {
+                font-size: 1.8em;
+            }
+        }
+
+        /* Section de téléchargement */
+        .download-section {
+            background: linear-gradient(135deg, rgba(103, 156, 188, 0.1), rgba(45, 52, 54, 0.2));
+            border: 2px solid #679cbc;
+            border-radius: 8px;
+            padding: 30px;
+            margin-top: 40px;
+            text-align: center;
+        }
+
+        .download-section h2 {
+            color: #679cbc;
+            margin-top: 0;
+            margin-bottom: 15px;
+        }
+
+        .download-section p {
+            color: var(--color-light);
+            margin-bottom: 20px;
+            font-size: 0.95em;
+        }
+
+        .download-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #679cbc, #4a7ba7);
+            color: var(--color-light);
+            padding: 12px 30px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s;
+            border: 2px solid #679cbc;
+        }
+
+        .download-button:hover {
+            background: linear-gradient(135deg, #4a7ba7, #3d5f7f);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(103, 156, 188, 0.4);
+        }
+
+        .download-button:active {
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <a href="../projet4.html" class="back-button">← Retour à la page Sokoban</a>
+
+    <h1>🎮 Sokoban - Jouez Maintenant!</h1>
+
+    <div class="game-wrapper">
+        <div id="terminal"></div>
+
+        <div class="controls">
+            <h3>⚙️ Contrôles</h3>
+
+            <div class="control-group">
+                <label for="level-select">Niveau :</label>
+                <select id="level-select" class="level-select">
+                    <option value="1">Niveau 1 - Facile</option>
+                    <option value="2">Niveau 2</option>
+                    <option value="3">Niveau 3</option>
+                    <option value="4">Niveau 4</option>
+                    <option value="5">Niveau 5</option>
+                    <option value="6">Niveau 6 - Difficile</option>
+                </select>
+            </div>
+
+            <div class="button-grid">
+                <button class="control-btn" onclick="startGame()">⏱️ Nouveau Jeu</button>
+                <button class="control-btn" onclick="resetLevel()">🔄 Recommencer</button>
+            </div>
+
+            <div class="status" id="status">
+                Mouvements: <strong id="move-count">0</strong>
+            </div>
+
+            <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid rgba(46, 204, 113, 0.3);">
+                <h4 style="color: #2ecc71; margin-top: 0;">Clavier</h4>
+                <div class="keyboard-legend">
+                    <div class="key"><strong>Z</strong> Haut</div>
+                    <div class="key"><strong>S</strong> Bas</div>
+                    <div class="key"><strong>Q</strong> Gauche</div>
+                    <div class="key"><strong>D</strong> Droite</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="instructions">
+        <h3>📖 Règles du Jeu</h3>
+        <ul>
+            <li><strong>Objectif :</strong> Poussez toutes les caisses ($) sur les cibles (.) en utilisant les flèches directionnelles.</li>
+            <li><strong>Joueur :</strong> Vous êtes le caractère (@). Déplacez-vous avec Z/Q/S/D.</li>
+            <li><strong>Caisses :</strong> Poussez-les une par une sur les cibles. Une caisse sur une cible apparaît comme (*)</li>
+            <li><strong>Murs :</strong> Les caractères # sont des murs infranchissables.</li>
+            <li><strong>Victoire :</strong> Le niveau est complété quand toutes les caisses sont sur les cibles.</li>
+            <li><strong>Astuce :</strong> Essayez de minimiser le nombre de mouvements!</li>
+        </ul>
+
+        <h3>🎯 Symboles</h3>
+        <div class="keyboard-legend" style="grid-template-columns: repeat(3, 1fr);">
+            <div class="key"><strong>@</strong> Vous</div>
+            <div class="key"><strong>+</strong> Vous sur cible</div>
+            <div class="key"><strong>$</strong> Caisse</div>
+            <div class="key"><strong>*</strong> Caisse placée</div>
+            <div class="key"><strong>.</strong> Cible</div>
+            <div class="key"><strong>#</strong> Mur</div>
+        </div>
+    </div>
+
+    <!-- Section de téléchargement -->
+    <div class="download-section">
+        <h2>Télécharger le Code Source</h2>
+        <p>Récupère le code C original et les fichiers de niveaux pour tester sur ton compilateur local.</p>
+        <a href="sokoban_source.zip" download class="download-button">
+            Télécharger Sokoban (Code Source + Niveaux)
+        </a>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/xterm@5.3.0/lib/xterm.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/xterm-addon-fit@0.5.0/lib/xterm-addon-fit.min.js"></script>
+
+<script>
+    let niveaux = [];
+    let term;
+    let currentLevel = 1;
+    let gameRunning = false;
+    let WasmModule = null;
+    let niveauxCharges = false;
+    
+    // Initialiser le terminal immédiatement
+    function initTerminal() {
+        term = new Terminal({
+            cols: 12,
+            rows: 12,
+            fontSize: 16,
+            fontFamily: '"Courier New", monospace',
+            theme: {
+                background: '#000000',
+                foreground: '#00FF00',
+                cursor: '#00FF00'
+            }
+        });
+
+        term.open(document.getElementById('terminal'));
+        term.write("Initialisation...\r\n");
+        
+        // Gestionnaire pour les entrées au clavier via xterm
+        term.onData(function(data) {
+            if (!gameRunning) return;
+
+            // xterm envoie les caractères en bytes
+            const charCode = data.charCodeAt(0);
+            
+            // Gérer z, q, s, d
+            if (charCode === 122 || charCode === 90) {  // z ou Z (avancer)
+                WasmModule._move(122);
+                renderGame();
+            } else if (charCode === 115 || charCode === 83) {  // s ou S (reculer)
+                WasmModule._move(115);
+                renderGame();
+            } else if (charCode === 113 || charCode === 81) {  // q ou Q (gauche)
+                WasmModule._move(113);
+                renderGame();
+            } else if (charCode === 100 || charCode === 68) {  // d ou D (droite)
+                WasmModule._move(100);
+                renderGame();
+            } else if (charCode === 120 || charCode === 88) {  // x ou X (abandonner)
+                resetLevel();
+            } else if (charCode === 114 || charCode === 82) {  // r ou R (recommencer)
+                resetLevel();
+            }
+        });
+    }
+
+    async function loadNiveaux() {
+        try {
+            console.log("Début du chargement des niveaux...");
+            term.write("Chargement des niveaux...\r\n");
+            
+            for (let i = 1; i <= 6; i++) {
+                try {
+                    const url = `niveau${i}.sok`;
+                    console.log(`Tentative de chargement: ${url}`);
+                    const response = await fetch(url);
+                    console.log(`Response status pour ${url}: ${response.status}`);
+                    
+                    if (!response.ok) {
+                        throw new Error(`HTTP ${response.status}`);
+                    }
+                    const text = await response.text();
+                    niveaux[i - 1] = text;
+                    console.log(`✓ Niveau ${i} chargé (${text.length} chars)`);
+                    term.write(`✓ Niveau ${i} chargé\r\n`);
+                } catch (e) {
+                    console.error(`✗ Erreur niveau ${i}:`, e);
+                    term.write(`✗ Erreur niveau ${i}\r\n`);
+                    throw e;
+                }
+            }
+            console.log(`✓ Tous les niveaux chargés! (${niveaux.length} niveaux)`);
+            term.write(`✓ Prêt! Clique sur "Nouveau Jeu"\r\n`);
+            niveauxCharges = true;
+            return true;
+        } catch (error) {
+            console.error("Erreur lors du chargement des niveaux:", error);
+            term.write("ERREUR de chargement des niveaux!\r\n");
+            niveauxCharges = false;
+            return false;
+        }
+    }
+
+    function startGame() {
+        if (!niveauxCharges || niveaux.length === 0) {
+            console.error("Niveaux non chargés!");
+            term.write("ERREUR: Niveaux non chargés!\r\n");
+            return;
+        }
+        
+        currentLevel = parseInt(document.getElementById('level-select').value);
+        const levelData = niveaux[currentLevel - 1];
+        
+        console.log(`[startGame] Chargement niveau ${currentLevel}, ${levelData.length} chars`);
+        console.log(`[startGame] Données du niveau:`, levelData.substring(0, 100));
+        
+        // Copier la string JavaScript en mémoire WASM
+        const bufferPtr = WasmModule._get_level_buffer();
+        WasmModule.stringToUTF8(levelData, bufferPtr, 2048);
+        
+        // Appeler la fonction pour charger le niveau
+        WasmModule._init_level_from_string();
+        console.log(`[startGame] Niveau initié dans WASM`);
+        
+        gameRunning = true;
+        renderGame();
+        term.focus();
+    }
+
+    function resetLevel() {
+        if (niveaux.length > 0) {
+            WasmModule._init_level_from_string(niveaux[currentLevel - 1]);
+        }
+        gameRunning = true;
+        renderGame();
+        term.focus();
+    }
+
+    function renderGame() {
+        console.log(`[renderGame] Début du rendu`);
+        term.clear();
+        
+        console.log(`[renderGame] Appel _get_plateau`);
+        const plateau = WasmModule._get_plateau();
+        console.log(`[renderGame] plateau pointer:`, plateau);
+        
+        const plateauStr = WasmModule.UTF8ToString(plateau);
+        console.log(`[renderGame] Plateau string length:`, plateauStr.length);
+        
+        if (plateauStr.trim().length === 0) {
+            console.log(`[renderGame] ERREUR: Plateau vide!`);
+            term.write("Erreur: Plateau vide!\r\n");
+        } else {
+            // Afficher avec retour à la ligne correct pour xterm
+            const lines = plateauStr.split('\n');
+            for (let line of lines) {
+                if (line.length > 0 || lines.indexOf(line) < 12) {
+                    term.write(line + "\r\n");
+                }
+            }
+        }
+        
+        updateStatus();
+        checkWin();
+    }
+
+    function updateStatus() {
+        const moves = WasmModule._get_moves();
+        document.getElementById('move-count').textContent = moves;
+    }
+
+    function checkWin() {
+        if (WasmModule._is_won()) {
+            const statusDiv = document.getElementById('status');
+            statusDiv.classList.add('win');
+            statusDiv.innerHTML = '🎉 VICTOIRE! <br>Mouvements: <strong id="move-count">' + WasmModule._get_moves() + '</strong>';
+            gameRunning = false;
+        } else {
+            const statusDiv = document.getElementById('status');
+            statusDiv.classList.remove('win');
+        }
+    }
+
+    // Initialiser le terminal
+    initTerminal();
+    
+    // IMPORTANT: Configurer Module AVANT de charger sokoban.js
+    var Module = {
+        onRuntimeInitialized: function() {
+            console.log("✓ Sokoban WASM initialized!");
+            WasmModule = Module;
+            
+            // Charger les niveaux après l'initialisation du WASM
+            loadNiveaux();
+        }
+    };
+</script>
+
+<script src="sokoban.js"></script>
+
+</body>
+</html>
