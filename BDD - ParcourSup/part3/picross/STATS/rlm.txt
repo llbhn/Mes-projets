@@ -1,0 +1,57 @@
+Explication Régression Linéaire Multiple :
+Nous faisons la regression sur 1 variable endogène et 4 variables explicatives :
+Y = ar_MentionBTB
+
+X1 = NbChars_ar
+X2 = CoeffSud_ar
+X3 = Departement_ar
+X4 = PropCandidate_ar
+
+Notre but était de savoir a quel point chaque variables influait sur la proportion de mention Bien Très Bien
+
+L'interet de la régression linéaire multiple est de prendre toutes ces matrices et y faire des opérations dessus pour obtenir la matrice A qui contient tout ce qui
+nous interesse.
+Celle-ci nous donne tous les coefficient multiplicateurs qu'il faut appliquer aux différentes variables pour deviner Y. Elle nous donne aussi b qui est le biais qu'on appliquera
+arbitrairement a toutes les prédictions
+Cela nous permettera ainsi de répondre à la problématique car on connaitra exactement le poids de chaque variable sur notre variable endogène qui est la proportion de mentions
+bien et très bien, et on pourra donc savoir si l'une d'entre elle a une influence beaucoup plus importante que les autres par exemple. Tout cela permetterai d'enfin comprendre
+les facteurs qui entrainent des bonnes mentions au bac
+
+en faisant tout les calculs, on obtient :
+A = [ 0.09998538  0.00833652  0.00586371 -0.00011649  0.04356352]
+Interprétation : 
+b ~= 0.100
+a1 ~= 0.008
+a2 ~= 0.006
+a3 ~= -0.0001
+a4 ~= 0.043
+
+MentionBTB = 0.043 * TailleNomFormation + 0.006 * RapprochementEquateur - 0.0001 * NumDepartement + 0.043 * PropCandidates
+
+Pour mieux se représenter ces résultats crutiaux j'ai fait un graphique, qui rapelle aussi les variables auxquels ces coefficient multiplicateurs sont associées
+On peut voir que le biais qui est pour rappel ajouter arbitrairement est le plus haut coefficient donc ce n'est pas exploitable vraiment ici.
+Ensuite on voit que tout les autres coefficient sont quand meme très proche de 0
+La taille du nom de formation a une très faible influence positive , le rapprochement avec l'éqquateur aussi,
+Le numéro de département a une très faible influance négative absolument négligeable et enfin, je veux quand meme le souligner mais
+la proportion de candidates a quand meme une assez grande influence positive par rapport aux autres. 
+Ce résultat confirme la rumeur qu'on peut entendre que les filles sont peut etre plus studieuses et apportent donc de meilleures mention à leurs formations.
+Je tiens quand meme a souligner que ce résultat de 0.044 reste quand meme très faible c'est parce que le graphique est assez zoomé.
+
+
+
+
+Calcul de corélation : 
+
+
+en faisant les calculs de corélation, on trouve 0.36, ce qui signifie que la proportion de mentions bien et très bien est assez peu corrélés à tout le 
+reste, on aurait pu s'en douter.
+
+
+Pour conclure je dirai que non on ne peut pas déterminer la mention a paritr de la taille de sa formation, de son rapprochement de l'équateur et de son numéro de département
+néaemoins c'est clairement négligeable
+Par contre on a trouvé une faible corrélation pour la proportion de candidate qui confirme très légèrement que les filles sont peut etre plus serieuses et arrivent
+à avoir de meilleures mentions
+Enfin, En voyant ces résultats je dirai a quelqu'un qui passe le bac qu'on a pas vraiment de solution miracle qui augmentera à coup sur
+sa mention mais je lui conseillerai quand meme pour un tout petit peu booster ses chances de :
+viser une formation avec un nom très long sur parcoursup, de peut être passer le bac dans un lycée au sud de la france tout en évitant les départements élevés
+car les stats montrent que tu perd 0.001% de chance d'avoir une bonne mention.
