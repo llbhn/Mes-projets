@@ -15,8 +15,8 @@ Configuration réseau :
 - Les trois machines sont configurées sur le même réseau virtuel, afin de pouvoir communiquer entre elles
 - Chaque VM dispose d'une adresse IP vérifiée et accessible depuis les autres machines
 
-![Machine victime](/img/Wazuh0.png)
-![Machine attaquante](/img/Wazuh1.png)
+![Machine victime](./img/Wazuh0.png)
+![Machine attaquante](./img/Wazuh1.png)
 
 ## 2. Installation de Wazuh Manager et Ajout des Agents
 
@@ -32,7 +32,7 @@ Ensuite, j'ai ajouté :
 
 Ces agents permettent de remonter les journaux système vers le manager afin de centraliser les événements de sécurité.
 
-![Dashboard Wazuh montrant les agents connectés](/img/Wazuh2.png)
+![Dashboard Wazuh montrant les agents connectés](./img/Wazuh2.png)
 
 ## 3. Analyse des Logs sur WindowsVictime
 
@@ -47,7 +47,7 @@ Ces événements sont essentiels pour détecter :
 - Les tentatives de brute force
 - Les connexions distantes suspectes (RDP)
 
-![Filtre Event Viewer avec 4624 / 4625](/img/Wazuh3.png)
+![Filtre Event Viewer avec 4624 / 4625](./img/Wazuh3.png)
 
 ## 4. Préparation de l'Attaque par Force Brute
 
@@ -58,8 +58,8 @@ Depuis la machine Linux_Attacker, j'ai préparé l'attaque :
 
 Cette étape permet de simuler un comportement réaliste d'attaquant.
 
-![Scan Nmap](/img/Wazuh4.png)
-![Contenu de la wordlist](/img/Wazuh5.png)
+![Scan Nmap](./img/Wazuh4.png)
+![Contenu de la wordlist](./img/Wazuh5.png)
 
 ## 5. Lancement de l'Attaque et Compromission
 
@@ -71,8 +71,8 @@ La commande Hydra a généré :
 
 Une fois les identifiants valides obtenus, j'ai utilisé `xfreerdp` pour établir une connexion RDP distante depuis la machine attaquante, démontrant la compromission du compte utilisateur.
 
-![Commande Hydra exécutée](/img/Wazuh6.png)
-![Connexion RDP réussie vers WindowsVictime](/img/Wazuh7.png)
+![Commande Hydra exécutée](./img/Wazuh6.png)
+![Connexion RDP réussie vers WindowsVictime](./img/Wazuh7.png)
 
 ## 6. Actions Post-Compromission et Détection via Wazuh
 
@@ -91,5 +91,5 @@ Dans le Wazuh Dashboard, j'ai pu observer :
 - La connexion réussie depuis la même IP
 - La corrélation entre les événements d'échec et de succès
 
-![Alertes Wazuh](/img/Wazuh8.png)
-![Logs détaillés](/img/Wazuh9.png)
+![Alertes Wazuh](./img/Wazuh8.png)
+![Logs détaillés](./img/Wazuh9.png)
