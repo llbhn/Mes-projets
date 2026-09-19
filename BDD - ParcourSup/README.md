@@ -10,7 +10,7 @@ Traduction du diagramme de classe UML fourni (`ParcourSup_simple.jpg`) en un sch
 
 Le schéma modélise les formations ParcourSup (établissement, commune, département, région, académie, filière) ainsi que les données d'admission qui en dépendent (généralités, répartition par type de bac, par mention, rang du dernier appelé par regroupement).
 
-**Fichier livré :** `create_parcoursup2_db.sql` — crée le schéma `parcoursup2` et l'ensemble des tables (`_academie`, `_region`, `_departement`, `_commune`, `_etablissement`, `_filiere`, `_formation`, `_session`, `_mention_bac`, `_type_bac`, `_regroupement`, `_admissions_generalites`, `_admissions_selon_type_neo_bac`, `_effectif_selon_mention`, `_rang_dernier_appele_selon_regroupement`).
+**Fichier livré :** `create_parcoursup2_db.sql` : crée le schéma `parcoursup2` et l'ensemble des tables (`_academie`, `_region`, `_departement`, `_commune`, `_etablissement`, `_filiere`, `_formation`, `_session`, `_mention_bac`, `_type_bac`, `_regroupement`, `_admissions_generalites`, `_admissions_selon_type_neo_bac`, `_effectif_selon_mention`, `_rang_dernier_appele_selon_regroupement`).
 
 ## Partie 2 — Peuplement de la base
 
@@ -19,8 +19,8 @@ Import des données du fichier `fr-esr-parcoursup_2022.csv` dans le schéma cré
 Méthode : le CSV est d'abord chargé une seule fois dans une table temporaire (`import_data`) via `WbImport` (SQLWorkbench/J), puis les données sont réparties dans les tables finales par des `INSERT ... SELECT`.
 
 **Fichiers livrés :**
-- `populate_parcoursup2_db.sql` — création de la table temporaire et import du CSV
-- `imort-partie-droite.sql` — répartition des données de `import_data` vers les tables normalisées (types de bac, mentions, regroupements, rangs d'appel)
+- `populate_parcoursup2_db.sql` : création de la table temporaire et import du CSV
+- `imort-partie-droite.sql` : répartition des données de `import_data` vers les tables normalisées (types de bac, mentions, regroupements, rangs d'appel)
 
 ## Partie 3 — Exploitation statistique
 
@@ -35,27 +35,3 @@ Méthode : le CSV est d'abord chargé une seule fois dans une table temporaire (
 **Fichier principal :** `exploitation_parcoursup.py` — version aboutie du script (titres de graphiques, structure en sections, calculs de variance/corrélation).
 
 D'autres scripts du dossier (`Louis.py`, `Terence.py`, `scriptSAE.py`) sont des versions de travail individuelles produites par les membres de l'équipe au cours du développement.
-
-## Prérequis
-
-- PostgreSQL
-- SQLWorkbench/J (pour l'import CSV via `WbImport`)
-- Python avec `numpy`, `pandas`, `matplotlib`
-
-## Utilisation
-
-```bash
-# Partie 1 : créer le schéma
-psql -f create_parcoursup2_db.sql
-
-# Partie 2 : peupler la base (depuis SQLWorkbench/J)
-# exécuter populate_parcoursup2_db.sql puis imort-partie-droite.sql
-
-# Partie 3 : lancer les statistiques
-python exploitation_parcoursup.py
-```
-
-## Limites connues
-
-- `imort-partie-droite.sql` contient des erreurs de syntaxe SQL sur les `UNION` (parties de requête incomplètes, virgules en trop) qui empêchent son exécution en l'état sur les tables `_regroupement` et `_rang_dernier_appele_selon_regroupement`.
-- La régression linéaire multiple ne conclut à aucune corrélation significative entre les variables testées et le taux de mentions — un résultat honnête, mais qui ne valide pas d'hypothèse forte.
