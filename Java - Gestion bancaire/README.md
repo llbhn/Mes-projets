@@ -1,6 +1,6 @@
 # Application de gestion bancaire — Java
 
-Petite application console qui simule une gestion de compte en banque : comptes courants et comptes épargnes, dépôts, retraits, historique des transactions, application d'intérêts.
+Application qui simule une gestion de compte en banque : comptes courants et comptes épargnes, dépôts, retraits, historique des transactions, application d'intérêts.
 
 Projet réalisé en 1ère année de BUT Informatique pour manipuler l'héritage, les interfaces, les exceptions et le polymorphisme en Java.
 
